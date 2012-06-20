@@ -17,9 +17,9 @@ inoremap <Plug>ZenCodingExpandAbbr u:call zencoding#expandAbbr(0,"")a
 inoremap <silent> <S-Tab> =BackwardsSnippet()
 inoremap <C-Tab> 	
 map  h
-snoremap <silent> <NL> i<Right>=TriggerSnippet()
-nmap <NL> j
 xmap <NL> j
+nmap <NL> j
+snoremap <silent> <NL> i<Right>=TriggerSnippet()
 omap <NL> j
 map  k
 map  l
@@ -97,6 +97,10 @@ snoremap \ b<BS>\
 snoremap ^ b<BS>^
 snoremap ` b<BS>`
 nmap gx <Plug>NetrwBrowseX
+xmap <Right> :bn
+nmap <Right> :bn
+xmap <Left> :bp
+nmap <Left> :bp
 vmap <F7> :call Python_Eval_VSplit() 
 snoremap <Left> bi
 snoremap <Right> a
@@ -123,11 +127,7 @@ map <F6> a=strftime("%Y-%m-%d %H:%M:%S")
 map <F2> :%s/\s*$//g:noh''
 map <F8> :new:read !svn diff:set syntax=diff buftype=nofilegg
 map <F9> ggVGg?
-nmap <Left> :bp
-xmap <Left> :bp
 omap <Left> :bp
-nmap <Right> :bn
-xmap <Right> :bn
 omap <Right> :bn
 map <C-Space> ?
 cnoremap  <Home>
@@ -216,6 +216,7 @@ set ruler
 set runtimepath=~/.vim,~/.vim/bundle/OmniCppComplete,~/.vim/bundle/html5,~/.vim/bundle/javascript.vim,~/.vim/bundle/nerdtree,~/.vim/bundle/snipMate,~/.vim/bundle/supertab,~/.vim/bundle/tag_list,~/.vim/bundle/vim-colors-solarized,~/.vim/bundle/vim-pathogen,~/.vim/bundle/vim-task,~/.vim/bundle/vimwiki,~/.vim/bundle/vimwiki.old,~/.vim/bundle/zencoding-vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim73,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/bundle/OmniCppComplete/after,~/.vim/bundle/snipMate/after,~/.vim/after
 set scrolloff=7
 set shiftwidth=2
+set shortmess=aoO
 set showmatch
 set showtabline=2
 set smartindent
@@ -229,6 +230,7 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set whichwrap=b,s,<,>,h,l
 set wildignore=*.pyc
 set wildmenu
+set winwidth=1
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -238,153 +240,29 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 config/settings.py
-badd +0 controllers/views.py
-badd +24 templates/index.html
-badd +9 pblog.py
-badd +4 config/url.py
-badd +0 ../aplus/config/url.py
-badd +12 ../aplus/config/settings.py
-badd +20 templates/base.html
-badd +0 ~/sourcecode/davidblog/davidblog/templates/_leftbar.html
-badd +0 ~/Documents/Wiki/Default/diary/diary.wiki
-badd +69 static/styles/style.css
+badd +6 mem_text.py
+badd +9 ~/Documents/Wiki/Default/index.wiki
+badd +13 config/settings.py
+badd +9 controllers/views.py
+badd +26 templates/index.html
+badd +5 pblog.py
+badd +8 config/url.py
+badd +1 ~/projects/aplus/config/url.py
+badd +12 ~/projects/aplus/config/settings.py
+badd +21 templates/base.html
+badd +1 ~/sourcecode/davidblog/davidblog/templates/_leftbar.html
+badd +1 ~/Documents/Wiki/Default/diary/diary.wiki
+badd +59 static/styles/style.css
+badd +8 ~/Documents/Wiki/Default/CSS.wiki
+badd +48 ~/Documents/Wiki/Default/Styling-Links.wiki
+badd +1 templates/blog.html
+badd +19 templates/entry.html
+badd +69 static/sql/tables.sql
+badd +4 ~/Documents/Wiki/Default/HowTos.wiki
+badd +12 ~/Documents/Wiki/Default/MySQLHowTos.wiki
+badd +0 templates/_sideBar.html
 args config/settings.py
-edit config/settings.py
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-map <buffer> ,  :w!:!python %
-noremap <buffer> <silent> ,tk :call Toggle_task_status()
-noremap <buffer> <silent> <C-D-CR> :call Toggle_task_status()
-inoremap <buffer> $d """"""O
-inoremap <buffer> $p print 
-inoremap <buffer> $i import 
-inoremap <buffer> $c ### #kla
-inoremap <buffer> $s self 
-inoremap <buffer> $r return 
-inoremap <buffer> <silent> <C-D-CR> :call Toggle_task_status()i
-inoreabbr <buffer> cifelse =IMAP_PutTextWithMovement("if <++>:\n<++>\nelse:\n<++>")
-inoreabbr <buffer> cif =IMAP_PutTextWithMovement("if <++>:\n<++>")
-inoreabbr <buffer> cfor =IMAP_PutTextWithMovement("for <++> in <++>:\n<++>")
-inoreabbr <buffer> cclass =IMAP_PutTextWithMovement("class <++>:\n<++>")
-inoreabbr <buffer> cfun =IMAP_PutTextWithMovement("def <++>(<++>):\n<++>\nreturn <++>")
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'python'
-setlocal filetype=python
-endif
-setlocal foldcolumn=0
-set nofoldenable
-setlocal nofoldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-set foldlevel=1
-setlocal foldlevel=1
-setlocal foldmarker={{{,}}}
-set foldmethod=indent
-setlocal foldmethod=indent
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=GetPythonIndent(v:lnum)
-setlocal indentkeys=!^F,o,O,<:>,0),0],0},=elif,=except
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-set linebreak
-setlocal linebreak
-setlocal nolisp
-set list
-setlocal list
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=pythoncomplete#Complete
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal smartindent
-setlocal softtabstop=4
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'python'
-setlocal syntax=python
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=500
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-let s:l = 12 - ((11 * winheight(0) + 13) / 26)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-12
-normal! 032l
-tabedit controllers/views.py
+edit controllers/views.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -509,13 +387,13 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 9 - ((8 * winheight(0) + 13) / 26)
+let s:l = 54 - ((14 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-9
-normal! 017l
-tabedit templates/base.html
+54
+normal! 0
+tabedit templates/entry.html
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -557,7 +435,7 @@ setlocal filetype=xhtml
 endif
 setlocal foldcolumn=0
 set nofoldenable
-setlocal foldenable
+setlocal nofoldenable
 setlocal foldexpr=0
 setlocal foldignore=#
 set foldlevel=1
@@ -628,332 +506,18 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-4
-normal zo
-5
-normal zo
--6
-normal zo
-11
-normal zo
-13
-normal zo
-14
-normal zo
-15
-normal zo
-17
-normal zo
-18
-normal zo
-17
-normal zo
-15
-normal zo
-27
-normal zo
-14
-normal zo
-13
-normal zo
-31
-normal zo
-11
-normal zo
-5
-normal zo
-13
-normal zo
-14
-normal zo
-15
-normal zo
-20
-normal zo
-21
-normal zo
-22
-normal zo
-30
-normal zo
-21
-normal zo
-41
-normal zo
-42
-normal zo
-43
-normal zo
-44
-normal zo
-47
-normal zo
-50
-normal zo
-52
-normal zo
-50
-normal zo
-43
-normal zo
-64
-normal zo
-65
-normal zo
-68
-normal zo
-71
-normal zo
-73
-normal zo
-71
-normal zo
-85
-normal zo
-86
-normal zo
-89
-normal zo
-92
-normal zo
-94
-normal zo
-92
-normal zo
-105
-normal zo
-106
-normal zo
-109
-normal zo
-112
-normal zo
-114
-normal zo
-112
-normal zo
-105
-normal zo
-86
-normal zo
-89
-normal zo
-92
-normal zo
-94
-normal zo
-92
-normal zo
-85
-normal zo
-106
-normal zo
-107
-normal zo
-110
-normal zo
-113
-normal zo
-115
-normal zo
-113
-normal zo
-107
-normal zo
-110
-normal zo
-113
-normal zo
-115
-normal zo
-113
-normal zo
-106
-normal zo
-65
-normal zo
-68
-normal zo
-71
-normal zo
-73
-normal zo
-71
-normal zo
-64
-normal zo
-85
-normal zo
-86
-normal zo
-89
-normal zo
-92
-normal zo
-94
-normal zo
-92
-normal zo
-86
-normal zo
-89
-normal zo
-92
-normal zo
-94
-normal zo
-92
-normal zo
-106
-normal zo
-107
-normal zo
-110
-normal zo
-113
-normal zo
-115
-normal zo
-113
-normal zo
-106
-normal zo
-85
-normal zo
-106
-normal zo
-107
-normal zo
-110
-normal zo
-113
-normal zo
-115
-normal zo
-113
-normal zo
-106
-normal zo
-129
-normal zo
-130
-normal zo
-133
-normal zo
-129
-normal zo
-42
-normal zo
-41
-normal zo
-20
-normal zo
-134
-normal zo
-14
-normal zo
-133
-normal zo
-13
-normal zo
-133
-normal zo
-4
-normal zo
-139
-normal zo
-139
-normal zo
-139
-normal zo
-139
-normal zo
-141
-normal zo
-142
-normal zo
-141
-normal zo
-139
-normal zo
-152
-normal zo
-153
-normal zo
-155
-normal zo
-153
-normal zo
-175
-normal zo
-176
-normal zo
-178
-normal zo
-176
-normal zo
-186
-normal zo
-188
-normal zo
-186
-normal zo
-204
-normal zo
-206
-normal zo
-211
-normal zo
-204
-normal zo
-175
-normal zo
-152
-normal zo
-220
-normal zo
-221
-normal zo
-222
-normal zo
-223
-normal zo
-224
-normal zo
-223
-normal zo
-231
-normal zo
-232
-normal zo
-231
-normal zo
-222
-normal zo
-221
-normal zo
-240
-normal zo
-220
-normal zo
-139
-normal zo
-139
-normal zo
-139
-normal zo
-let s:l = 126 - ((13 * winheight(0) + 13) / 26)
+let s:l = 20 - ((17 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-126
-normal! 010l
-tabnext 3
+20
+normal! 022l
+tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=20 shortmess=filnxtToO
+set winheight=1 winwidth=1 shortmess=aoO
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)

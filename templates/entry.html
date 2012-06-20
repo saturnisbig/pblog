@@ -1,0 +1,90 @@
+<%inherit file="base.html" />
+
+<%def name="title()">${entry.entry_title}</%def>
+
+<div id="content">
+  <div class="blogList">
+    <div class="blog">
+      <div class="context">
+        <span class="pre">
+          <a href="#">&lt;&lt;&nbsp;&nbsp;上一篇</a>
+        </span>
+        |
+        <span class="top">
+          <a href="/">首页</a>
+        </span>
+        |
+        <span class="next">
+          <a href="#">下一篇&nbsp;&nbsp;&gt;&gt;</a></span> 
+      </div>
+      <div class="blogHeader">
+        <h2><a href="/entries/${entry.entry_slug}/">${entry.entry_title}</a><span class="category">-[ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span></h2><h3>6/5/2012</h3>
+      </div>
+      <div class="blogBody">
+        <p class="cc-lisence" style="line-height:180%;">
+          <a target="_blank" href="http://creativecommons.org/licenses/by/3.0/deed.zh">版权声明</a>
+          ：转载时请以超链接形式标明文章原始出处和作者信息及
+          <a target="_blank" href="#">本声明</a>
+          <br>
+          <a href="#">http://teddy007.blogbus.com/logs/163801527.html</a>
+          <br>
+          <br>
+        </p>
+        ${entry.entry_content}
+        <div class="addFav">
+          <br>
+          收藏到：
+          <span class="delicious">
+            <a href="#">Del.icio.us</a>
+          </span>
+        </div>
+      </div>
+      <div class="blogFooter">
+        <div class="tags">
+          Tag: 
+          % if entry.tags:
+            % for t in entry.tags:
+              <a href="/tag/${t.name}/"><span>${ t.name}</span></a> 
+            % endfor
+          % endif
+        </div>
+        <div class="blogInfo">
+          <span class="author">布丁</span>
+          发表于<span class="time">${entry.entry_created_time}</span>
+          |
+          <a href="#" class="edit">编辑</a>
+          |
+          <a href="#" class="share">分享<span class="count">0</span></a>
+        </div>
+      </div>
+    </div>
+    <div id="commentForm">
+      <h2>发表评论</h2>
+      <form method="post" action="#" name="cForm">
+        <fieldset id="fs_nologin">
+        </fieldset>
+        <fieldset id="fs_login">
+          <div>
+            <label for="username">用户名</label>
+            <input id="username" class="textField" type="text" tabindex="1" name="username" />
+            <span class="emailnotice" style="margin-left: 5px;color: #cccccc;">
+              <a href="#" target-"_blank">请登录后留言</a>
+            </span>
+          </div>
+          <div>
+            <label for="password">密&#12288;码</label>
+            <input id="password" class="textField" type="password" tabindex="2" name="password"/> 
+          </div>
+        </fieldset>
+        <div>
+          <textarea id="comment" name="comment" rows="8" tabindex="3"></textarea>
+        </div>
+        <div class="submti">
+          <input id="submit_comment" type="submit" class="button" value="提交" name="addComment"/>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<%include file="_sideBar.html" />
