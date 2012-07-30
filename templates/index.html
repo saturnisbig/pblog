@@ -10,7 +10,7 @@
             <div class="blogHeader">
                 <h2>
                     <a href="/entry/${entry.entry_slug}/">${entry.entry_title}</a>
-                    <span class="category"> - [ <a href="#">${entry.entry_category}</a>]</span>
+                    <span class="category"> - [ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span>
                 </h2>
                 <!--<h3>
                     ${entry.entry_created_time}
@@ -46,4 +46,3 @@
         % endif
     </div>
 </div>
-<%include file="_sideBar.html" />

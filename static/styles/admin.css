@@ -1,0 +1,43 @@
+
+body {
+  font: 70% 'Lucida Grande', Verdana, Helvetica, sans-serif;
+  color: #666666;
+}
+a:link, a:visited {
+  color: #666666;
+  text-decoration: none;
+}
+a:hover, a:active {
+  color: #FF6600;
+  text-decoration: underline;
+}
+#container {
+  width: 960px;
+  border: 1px solid #DDDDDD;
+  margin: 0 auto;
+}
+#header {
+  width: 760px;
+  border: 1px solid #DDDDDD;
+  margin: 0 auto;
+}
+#menu {
+  border: 1px solid #DDDDDD;
+  float: left;
+}
+#menu ul li {
+  float: left;
+  display: inline;
+  margin-left: 40px;
+}
+#menu ul li a {
+  display: block;
+}
+#main {
+  width: 760px;
+  border: 1px solid #DDDDDD;
+  margin: 0 auto;
+}
+.clear {
+  clear: both;
+}

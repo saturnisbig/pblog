@@ -1,0 +1,27 @@
+<%inherit file="base.html" />
+<%def name="title()">文章列表</%def>
+
+<p><a href="/entry/add/">添加文章</a></p>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>序号</th>
+        <th>标题</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+    % if entries:
+    % for i, entry in enumerate(entries):
+    <tr>
+        <td>${ i }</td>
+        <td>${ entry.entry_title }</td>
+        <td>${ entry.created_time }</td>
+        <td>${ entry.modified_time }</td>
+        <td>
+            <a href="/admin/entry/edit/${ entry.id }/">编辑</a>
+            <a href="/admin/entry/del/${ entry.id }/">删除</a>
+        </td>
+    </tr>
+    % endfor
+    % endif
+</table>

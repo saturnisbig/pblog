@@ -1,0 +1,8 @@
+<%inherit file='base.html' />
+<%def name='title()'>标签编辑</%def>
+
+<form action="/admin/tag/edit/${ tId }/" method="post" accept-charset="utf-8">
+  
+${ f.render() }
+
+</form>

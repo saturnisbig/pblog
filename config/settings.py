@@ -18,3 +18,9 @@ render = render_mako(
     output_encoding='utf-8',
     )
 
+render_admin = render_mako(
+    directories = [os.getcwd() + '/templates/admin'],
+    input_encoding = 'utf-8',
+    output_encoding = 'utf-8',
+    )
+

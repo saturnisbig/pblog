@@ -1,0 +1,22 @@
+<%inherit file="base.html" />
+<%def name="title()">标签管理</%def>
+
+<table>
+    <tr>
+        <th>No.</th>
+        <th>名称</th>
+        <th>文章数</th>
+        <th>操作</th>
+    </tr>
+    % for i, one in enumerate(tags):
+        <tr>
+            <td>${ i }</td>
+            <td>${ one.name }</td>
+            <td>${ one.entry_num }</td>
+            <td>
+                <a href="/admin/tag/edit/${ one.id }/">修改</a>
+                <a href="/admin/tag/del/${ one.id }/">删除</a>
+            </td>
+        </tr>
+    % endfor
+</table>

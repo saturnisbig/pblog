@@ -112,15 +112,15 @@ body {
 #content .blog{
   margin-bottom: 40px;
 }
-#content .context {
+#content .pageLink {
   font-size: 12px;
   color: #666666;
   padding-bottom: 10px;
 }
-.context a:link, .context a:visited {
+.pageLink a:link, .pageLink a:visited {
   color: #666666;
 }
-.context a:hover, .context a:active {
+.pageLink a:hover, .pageLink a:active {
   color: #999999;
 }
 #content .blogHeader {
@@ -209,6 +209,7 @@ body {
   color: #333333;
   margin: 0 0 50px;
   padding: 0;
+  border: 1px solid #DDDDDD;
 }
 #fs_login {
   margin: 0px;
@@ -216,16 +217,61 @@ body {
   border: medium none;
   display: block;
 }
+#comment-list {
+  border: 1px solid #DDDDDD;
+  margin: 10px 0;
+}
+.comment-node {
+  font-size: 12px;
+  border: 1px solid #DDDDDD;
+  margin: 10px;
+  padding: 5px;
+  background-color: #FFFFFF;
+}
+.comment-controls {
+  float: right;
+}
+.comment-controls a:link, .comment-controls a:visited {
+  background-color: #EFEFEF;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px 3px 3px 3px;
+  color: #333333;
+  font-weight: 700;
+  padding: 4px 8px;
+}
+.comment-controls a:hover, .comment-controls a:active {
+  color: #FFFFFF;
+  background-color: #313428;
+}
+#comment-list h2 {
+  background: url("../images/comment-title-white.jpg") repeat-x scroll center top #EFEFEF;
+  font-size: 14px;
+  color: #666666;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+.comment-author {
+  color: #666666;
+  font-weight: bold;
+}
+.comment-meta {
+  color: #999999;
+}
 #commentForm div {
   margin-bottom: 10px;
 }
 #commentForm h2 {
+  background: url("../images/comment-title-white.jpg") repeat-x scroll center top #EFEFEF;
   color: #666666;
   font-family: Verdana, sans-serif;
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 20px;
   margin-top: 0;
+  padding: 5px 10px;
+}
+#commentForm form {
+  margin-left: 10px;
 }
 #commentForm label {
   font-size: 12px;
@@ -233,7 +279,7 @@ body {
   display: block;
   float: left;
   vertical-align: bottom;
-  width: 40px;
+  width: 52px;
 }
 #commentForm .textField {
   border: 1px solid #999999;

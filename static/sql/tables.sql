@@ -18,7 +18,7 @@ CREATE TABLE entries(
 /* 创建外键的时候，字段的类型必须相同 */
 CREATE TABLE comments (
   id serial primary key,
-  entry_id int(11), /* need to add foreign key support */
+  entry_id int(11), 
   email varchar(50) not null,
   username varchar(50) not null,
   url varchar(255),

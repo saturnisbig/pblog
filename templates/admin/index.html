@@ -1,0 +1,12 @@
+<%inherit file="base.html" />
+
+<%def name="title()">首页</%def>
+<div id="content" style="margin: 0 auto; width: 760px;">
+<ul>
+    <li><a href="/admin/entries/">现在共有 ${ entryNum } 篇文章</a></li>
+    <li><a href="/admin/comments/">现在共有 ${ commentNum } 条评论</a></li>
+    <li><a href="/admin/tags/">现在共有 ${ tagNum } 标签</a></li>
+    <li><a href="/admin/categories/">现在有 ${ categoryNum }个类别</a></li>
+    <li><a href="/admin/links/">现在有 ${ linkNum } 个链接</a></li>
+</ul>
+</div>

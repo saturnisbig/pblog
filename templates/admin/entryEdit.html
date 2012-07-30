@@ -1,0 +1,64 @@
+<%inherit file="base.html" />
+<%def name="title()">修改日志</%def>
+
+<link rel="stylesheet" href="/static/js/markitup/skins/markitup/style.css" type="text/css" media="screen" charset="utf-8"/>
+<link rel="stylesheet" href="/static/js/markitup/sets/default/style.css" type="text/css" media="screen" charset="utf-8"/>
+
+<script src="/static/js/markitup/jquery.markitup.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/markitup/sets/default/set.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function() {
+    $("#markItUp").markItUp(mySettings);
+});
+//]]>
+</script>
+
+
+<p><a href="/admin/entries/">返回文章列表</a></p>
+% if entry:
+<div id="entry_edit">
+    <form action="/admin/entry/edit/${ entry.id }/" method="POST" id="entry_form">
+        <table>
+            <tr>
+                <th>标题</th>
+                <td><input type="text" name="title" value="${ f.title.value }" /></td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td><input type="text" name="slug" value="${ f.slug.value }" /></td>
+            </tr>
+            <tr>
+                <th>分类</th>
+                <td>
+                    <select name="category_id">
+                        % for one in categories:
+                        <option value="${ one.id }" 
+                        % if one.id == entry.category_id:
+                        selected="selected"
+                        % endif
+                        >
+                        ${ one.name }(${ one.entry_num })
+                        </option>
+                        % endfor
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>标签</th>
+                <td><input type="text" name="tags" value="${ entry.tags }" /></td>
+            </tr>
+            <tr>
+                <th>正文</th>
+                <td><textarea name="content" id="markItUp">${ entry.content }</textarea></td>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td><input type="submit" value="更新日志" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+% else:
+<p>文章不存在</p>
+% endif

@@ -130,6 +130,7 @@ map <F9> ggVGg?
 omap <Left> :bp
 omap <Right> :bn
 map <C-Space> ?
+imap  alert();hi
 cnoremap  <Home>
 cnoremap  <End>
 inoremap  
@@ -139,6 +140,7 @@ cnoremap  
 imap  <Plug>SuperTabBackward
 imap  
 inoremap <silent> 	 =ShowAvailableSnips()
+imap  console.log();hi
 inoremap  :set pastemui+mv'uV'v=:set nopaste
 imap A <Plug>ZenCodingAnchorizeSummary
 imap a <Plug>ZenCodingAnchorizeURL
@@ -174,12 +176,12 @@ vmap ê :m'>+`<my`>mzgv`yo`z
 nmap ë mz:m-2`z
 nmap ê mz:m+`z
 iabbr xname Teddy Fish
+iabbr tdate =strftime("=%d%m%Y")
 iabbr xdate =strftime("%d/%m/%y %H:%M:%S")
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set autoindent
 set autoread
-set autowriteall
 set background=dark
 set backspace=eol,start,indent
 set cindent
@@ -189,11 +191,12 @@ set cscopeprg=/usr/bin/cscope
 set cscopetag
 set cscopetagorder=1
 set cscopeverbose
-set dictionary=~/.vim/ftplugin/css.txt
+set dictionary=~/.vim/ftplugin/css.txt,~/.vim/ftplugin/javascript.txt
 set errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 set expandtab
 set fileencodings=ucs-bom,utf-8,GB18030,gbk
 set fileformats=unix,dos,mac
+set foldlevelstart=1
 set grepprg=grep\ -nH\ $*
 set guifont=Panic\ Sans\ 12
 set guifontwide=WenQuanYi\ Zen\ Hei\ 12
@@ -213,10 +216,9 @@ set omnifunc=csscomplete#CompleteCSS
 set pastetoggle=<F3>
 set printoptions=paper:letter
 set ruler
-set runtimepath=~/.vim,~/.vim/bundle/OmniCppComplete,~/.vim/bundle/html5,~/.vim/bundle/javascript.vim,~/.vim/bundle/nerdtree,~/.vim/bundle/snipMate,~/.vim/bundle/supertab,~/.vim/bundle/tag_list,~/.vim/bundle/vim-colors-solarized,~/.vim/bundle/vim-pathogen,~/.vim/bundle/vim-task,~/.vim/bundle/vimwiki,~/.vim/bundle/vimwiki.old,~/.vim/bundle/zencoding-vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim73,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/bundle/OmniCppComplete/after,~/.vim/bundle/snipMate/after,~/.vim/after
+set runtimepath=~/.vim,~/.vim/bundle/OmniCppComplete,~/.vim/bundle/html5,~/.vim/bundle/javascript.vim,~/.vim/bundle/nerdtree,~/.vim/bundle/snipMate,~/.vim/bundle/supertab,~/.vim/bundle/tag_list,~/.vim/bundle/tlib_vim,~/.vim/bundle/tplugin_vim,~/.vim/bundle/vim-addon-mw-utils,~/.vim/bundle/vim-colors-solarized,~/.vim/bundle/vim-pathogen,~/.vim/bundle/vim-task,~/.vim/bundle/vimwiki,~/.vim/bundle/vimwiki.old,~/.vim/bundle/zencoding-vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim73,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/bundle/OmniCppComplete/after,~/.vim/bundle/snipMate/after,~/.vim/after
 set scrolloff=7
 set shiftwidth=2
-set shortmess=aoO
 set showmatch
 set showtabline=2
 set smartindent
@@ -230,7 +232,6 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set whichwrap=b,s,<,>,h,l
 set wildignore=*.pyc
 set wildmenu
-set winwidth=1
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -240,42 +241,169 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +6 mem_text.py
-badd +9 ~/Documents/Wiki/Default/index.wiki
-badd +13 config/settings.py
-badd +9 controllers/views.py
-badd +26 templates/index.html
-badd +5 pblog.py
-badd +8 config/url.py
-badd +1 ~/projects/aplus/config/url.py
-badd +12 ~/projects/aplus/config/settings.py
-badd +21 templates/base.html
-badd +1 ~/sourcecode/davidblog/davidblog/templates/_leftbar.html
-badd +1 ~/Documents/Wiki/Default/diary/diary.wiki
-badd +59 static/styles/style.css
-badd +8 ~/Documents/Wiki/Default/CSS.wiki
-badd +48 ~/Documents/Wiki/Default/Styling-Links.wiki
-badd +1 templates/blog.html
-badd +19 templates/entry.html
-badd +69 static/sql/tables.sql
-badd +4 ~/Documents/Wiki/Default/HowTos.wiki
-badd +12 ~/Documents/Wiki/Default/MySQLHowTos.wiki
-badd +0 templates/_sideBar.html
-args config/settings.py
-edit controllers/views.py
+badd +8 ~/Documents/tblog/pelican.conf.py
+badd +6 ~/Documents/tblog/src/tpl.md
+badd +56 ~/Documents/tblog/Makefile
+badd +932 ~/.vimrc
+badd +204 controllers/adminviews.py
+badd +18 admin.py
+badd +12 templates/admin/index.html
+badd +29 static/sql/tables.sql
+badd +14 templates/admin/entries.html
+badd +10 templates/admin/base.html
+badd +4 static/styles/admin.css
+badd +8 static/styles/style.css
+badd +12 ~/projects/aplus/static/styles/style.css
+badd +44 controllers/views.py
+badd +20 templates/admin/entryEdit.html
+badd +19 static/sql/insert.sql
+badd +11 config/url.py
+badd +6 form.py
+badd +10 templates/base.html
+badd +31 static/js/markitup/sets/default/set.js
+badd +12 static/js/markitup/sets/markdown/style.css
+badd +0 templates/admin/comments.html
+badd +29 forms.py
+badd +4 templates/admin/commentEdit.html
+badd +6 templates/admin/tags.html
+badd +8 templates/admin/tagEdit.html
+args controllers/adminviews.py
+edit templates/admin/tags.html
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal cindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+setlocal commentstring=<!--%s-->
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal expandtab
+if &filetype != 'html'
+setlocal filetype=html
+endif
+setlocal foldcolumn=0
+set nofoldenable
+setlocal nofoldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+set foldlevel=1
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+set foldmethod=indent
+setlocal foldmethod=indent
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=HtmlIndentGet(v:lnum)
+setlocal indentkeys=o,O,*<Return>,<>>,{,}
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255,$
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+set list
+setlocal list
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:],<:>
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=htmlcomplete#CompleteTags
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=4
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'html'
+setlocal syntax=html
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=500
+setlocal thesaurus=
+setlocal noundofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+let s:l = 22 - ((21 * winheight(0) + 13) / 26)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+22
+normal! 07l
+tabedit controllers/adminviews.py
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+noremap <buffer> <silent> ,tk :call Toggle_task_status()
 map <buffer> ,  :w!:!python %
+noremap <buffer> <silent> <C-D-CR> :call Toggle_task_status()
 inoremap <buffer> $d """"""O
 inoremap <buffer> $p print 
 inoremap <buffer> $i import 
 inoremap <buffer> $c ### #kla
 inoremap <buffer> $s self 
 inoremap <buffer> $r return 
+inoremap <buffer> <silent> <C-D-CR> :call Toggle_task_status()i
 inoreabbr <buffer> cifelse =IMAP_PutTextWithMovement("if <++>:\n<++>\nelse:\n<++>")
 inoreabbr <buffer> cif =IMAP_PutTextWithMovement("if <++>:\n<++>")
 inoreabbr <buffer> cfor =IMAP_PutTextWithMovement("for <++> in <++>:\n<++>")
@@ -290,12 +418,12 @@ setlocal bufhidden=
 setlocal buflisted
 setlocal buftype=
 setlocal cindent
-setlocal cinkeys=0{,0},0),:,!^F,o,O,e
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:XCOMM,n:>,fb:-
-setlocal commentstring=#%s
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -333,13 +461,13 @@ setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=2
 setlocal imsearch=2
-setlocal include=^\\s*\\(from\\|import\\)
-setlocal includeexpr=substitute(v:fname,'\\.','/','g')
+setlocal include=
+setlocal includeexpr=
 setlocal indentexpr=GetPythonIndent(v:lnum)
 setlocal indentkeys=!^F,o,O,<:>,0),0],0},=elif,=except
 setlocal noinfercase
 setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=pydoc
+setlocal keywordprg=
 set linebreak
 setlocal linebreak
 setlocal nolisp
@@ -372,7 +500,7 @@ setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=en
 setlocal statusline=
-setlocal suffixesadd=.py
+setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
 if &syntax != 'python'
@@ -387,137 +515,18 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 54 - ((14 * winheight(0) + 13) / 26)
+let s:l = 204 - ((12 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-54
-normal! 0
-tabedit templates/entry.html
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
-setlocal commentstring=<!--%s-->
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'xhtml'
-setlocal filetype=xhtml
-endif
-setlocal foldcolumn=0
-set nofoldenable
-setlocal nofoldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-set foldlevel=1
-setlocal foldlevel=1
-setlocal foldmarker={{{,}}}
-set foldmethod=indent
-setlocal foldmethod=indent
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=croql
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=HtmlIndentGet(v:lnum)
-setlocal indentkeys=o,O,*<Return>,<>>,{,}
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255,$
-setlocal keywordprg=
-set linebreak
-setlocal linebreak
-setlocal nolisp
-set list
-setlocal list
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:],<:>
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=htmlcomplete#CompleteTags
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=2
-setlocal noshortname
-setlocal smartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'xhtml'
-setlocal syntax=xhtml
-endif
-setlocal tabstop=8
-setlocal tags=
-setlocal textwidth=500
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-let s:l = 20 - ((17 * winheight(0) + 13) / 26)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-20
-normal! 022l
-tabnext 1
+204
+normal! 08l
+tabnext 2
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=1 shortmess=aoO
+set winheight=1 winwidth=20 shortmess=filnxtToO
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)

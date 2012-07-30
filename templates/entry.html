@@ -5,7 +5,7 @@
 <div id="content">
   <div class="blogList">
     <div class="blog">
-      <div class="context">
+      <div class="pageLink">
         <span class="pre">
           <a href="#">&lt;&lt;&nbsp;&nbsp;上一篇</a>
         </span>
@@ -18,7 +18,7 @@
           <a href="#">下一篇&nbsp;&nbsp;&gt;&gt;</a></span> 
       </div>
       <div class="blogHeader">
-        <h2><a href="/entries/${entry.entry_slug}/">${entry.entry_title}</a><span class="category">-[ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span></h2><h3>6/5/2012</h3>
+        <h2><a href="/entry/${entry.entry_slug}/">${entry.entry_title}</a><span class="category">-[ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span></h2><h3>6/5/2012</h3>
       </div>
       <div class="blogBody">
         <p class="cc-lisence" style="line-height:180%;">
@@ -58,9 +58,28 @@
         </div>
       </div>
     </div>
+    % if comments:
+    <div id="comment-list">
+      <h2>${ entry.comment_num }条评论</h2>
+      %for c in comments:
+      <div class="comment-node">
+        <div class="comment-controls"><a href="#">回复</a></div>
+        <div class="comment-author">${ c.username }</div>
+        <div class="comment-meta">
+          Posted at: ${ c.created_time }
+        </div>
+        <div class="comment-content">
+          ${c.comment}
+        </div>
+      </div> 
+      % endfor
+    </div> <!-- comment-list ends -->
+    % endif
+
     <div id="commentForm">
       <h2>发表评论</h2>
-      <form method="post" action="#" name="cForm">
+      <form method="post" action="/add_comment/" name="cForm">
+        <input type="hidden" name="id" value="${entry.entry_id}" />
         <fieldset id="fs_nologin">
         </fieldset>
         <fieldset id="fs_login">
@@ -72,9 +91,19 @@
             </span>
           </div>
           <div>
+            <label for="email">邮&#12288;箱</label>
+            <input id="email" class="textField" type="text" tabindex="2" name="email"/> 
+          </div>
+          <div>
+            <label for="url">个人网站</label>
+            <input id="url" class="textField" type="text" tabindex="2" name="url"/> 
+          </div>
+          <!--
+          <div>
             <label for="password">密&#12288;码</label>
             <input id="password" class="textField" type="password" tabindex="2" name="password"/> 
           </div>
+          -->
         </fieldset>
         <div>
           <textarea id="comment" name="comment" rows="8" tabindex="3"></textarea>
@@ -82,9 +111,7 @@
         <div class="submti">
           <input id="submit_comment" type="submit" class="button" value="提交" name="addComment"/>
         </div>
-
       </form>
     </div>
   </div>
 </div>
-<%include file="_sideBar.html" />
