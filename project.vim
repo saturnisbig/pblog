@@ -182,6 +182,7 @@ let &cpo=s:cpo_save
 unlet s:cpo_save
 set autoindent
 set autoread
+set autowriteall
 set background=dark
 set backspace=eol,start,indent
 set cindent
@@ -232,6 +233,7 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set whichwrap=b,s,<,>,h,l
 set wildignore=*.pyc
 set wildmenu
+set window=38
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -241,153 +243,52 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
+badd +11 ~/Documents/Wiki/Default/diary/2012-07-30.wiki
 badd +8 ~/Documents/tblog/pelican.conf.py
 badd +6 ~/Documents/tblog/src/tpl.md
 badd +56 ~/Documents/tblog/Makefile
 badd +932 ~/.vimrc
-badd +204 controllers/adminviews.py
-badd +18 admin.py
+badd +49 controllers/adminviews.py
+badd +15 admin.py
 badd +12 templates/admin/index.html
-badd +29 static/sql/tables.sql
-badd +14 templates/admin/entries.html
-badd +10 templates/admin/base.html
+badd +46 static/sql/tables.sql
+badd +4 templates/admin/entries.html
+badd +29 templates/admin/base.html
 badd +4 static/styles/admin.css
 badd +8 static/styles/style.css
 badd +12 ~/projects/aplus/static/styles/style.css
 badd +44 controllers/views.py
-badd +20 templates/admin/entryEdit.html
+badd +18 templates/admin/entryEdit.html
 badd +19 static/sql/insert.sql
 badd +11 config/url.py
 badd +6 form.py
 badd +10 templates/base.html
 badd +31 static/js/markitup/sets/default/set.js
 badd +12 static/js/markitup/sets/markdown/style.css
-badd +0 templates/admin/comments.html
-badd +29 forms.py
+badd +1 templates/admin/comments.html
+badd +13 forms.py
 badd +4 templates/admin/commentEdit.html
-badd +6 templates/admin/tags.html
+badd +4 templates/admin/tags.html
 badd +8 templates/admin/tagEdit.html
+badd +4 templates/admin/categories.html
+badd +7 static/sql/category.sql
+badd +9 ~/Documents/Wiki/Default/index.wiki
+badd +4 ~/Documents/Wiki/Default/HowTos.wiki
+badd +11 ~/Documents/Wiki/Default/MySQLHowTos.wiki
+badd +13 ~/Documents/Wiki/Default/Markdown.wiki
+badd +4 templates/admin/categoryEdit.html
+badd +4 templates/admin/links.html
+badd +7 templates/admin/linkEdit.html
+badd +2 templates/admin/entryAdd.html
+badd +2 templates/admin/add.html
+badd +0 templates/admin/tagAdd.html
+badd +4 templates/admin/categoryAdd.html
+badd +3 ~/Documents/Wiki/Default/diary/2012-08-04.wiki
+badd +3 ~/Documents/Wiki/Default/diary/diary.wiki
+badd +1 ~/Documents/Wiki/Default/diary/2012-05-25.wiki
+badd +5 templates/admin/linkAdd.html
 args controllers/adminviews.py
-edit templates/admin/tags.html
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal balloonexpr=
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
-setlocal commentstring=<!--%s-->
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'html'
-setlocal filetype=html
-endif
-setlocal foldcolumn=0
-set nofoldenable
-setlocal nofoldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-set foldlevel=1
-setlocal foldlevel=1
-setlocal foldmarker={{{,}}}
-set foldmethod=indent
-setlocal foldmethod=indent
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=HtmlIndentGet(v:lnum)
-setlocal indentkeys=o,O,*<Return>,<>>,{,}
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255,$
-setlocal keywordprg=
-set linebreak
-setlocal linebreak
-setlocal nolisp
-set list
-setlocal list
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:],<:>
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=htmlcomplete#CompleteTags
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal smartindent
-setlocal softtabstop=4
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'html'
-setlocal syntax=html
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=500
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-let s:l = 22 - ((21 * winheight(0) + 13) / 26)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-22
-normal! 07l
-tabedit controllers/adminviews.py
+edit controllers/adminviews.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -515,13 +416,13 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 204 - ((12 * winheight(0) + 13) / 26)
+let s:l = 359 - ((17 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-204
-normal! 08l
-tabnext 2
+359
+normal! 047l
+tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

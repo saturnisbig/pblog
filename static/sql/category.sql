@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(50) NOT NULL,
   `slug` varchar(75) NOT NULL,
   `entryNum` int(11) NOT NULL,
+  `createdTime` datetime,
   PRIMARY KEY (`id`)
   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

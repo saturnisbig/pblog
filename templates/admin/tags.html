@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
 <%def name="title()">标签管理</%def>
 
+<p id="catAdd"><a href="/admin/tag/add/">添加标签</a></p>
 <table>
     <tr>
         <th>No.</th>
@@ -10,7 +11,7 @@
     </tr>
     % for i, one in enumerate(tags):
         <tr>
-            <td>${ i }</td>
+            <td>${ i + 1 }</td>
             <td>${ one.name }</td>
             <td>${ one.entry_num }</td>
             <td>

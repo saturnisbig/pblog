@@ -4,6 +4,8 @@
 from config import settings
 import web
 from forms import *
+from datetime import datetime
+
 
 
 db = settings.db
@@ -32,6 +34,48 @@ class entries(object):
                                 id, modified_time FROM entries ORDER BY id DESC"))
         datas['entries'] = entries
         return render.entries(**datas)
+
+class entryAdd(object):
+    def GET(self):
+        cats = list(db.select('categories'))
+        datas['categories'] = cats
+        return render.entryAdd(**datas)
+
+    def POST(self):
+        f = entryForm()
+        i = web.input(tags=None)
+        catId = i['category_id']
+        entryId = db.insert('entries', title=i['title'], slug=i['slug'], category_id=catId, \
+                            modified_time=datetime.now(), created_time=datetime.now(), content=i['content'])
+        print i['tags'] == None, i['tags'], len(i['tags'])
+        if entryId:
+            db.query("update categories set entry_num = entry_num +1 where id=%d" % int(catId))
+
+            if len(i['tags']) > 0:
+                tags = [i.strip() for i in i['tags'].split(',')]
+                for t in tags:
+                    tmpTag = list(db.select('tags', where='name="%s"' % t))
+                    if len(tmpTag) > 0:
+                        db.insert('entry_tag', entry_id=entryId, tag_id=tmpTag[0].id)
+                        db.query("UPDATE tags SET entry_num = entry_num + 1 WHERE id=%d" % tmpTag[0].id)
+                    else:
+                        t_id = db.insert('tags', name=t, entry_num=1)
+                        db.insert('entry_tag', entry_id=entryId, tag_id=t_id)
+
+            return web.seeother('/entries/')
+        #origTags = list(db.select('tags', what='name, id'))
+        #tmpTags = []
+        #for t in origTags:
+        #    tmpTags.append(t.name)
+        #existTags = set(tmpTags)
+        ##existTags = set(tmpTags.append(t.name) for t in origTags)
+        #print existTags
+        #addedTags = tmpTags - existTags
+        #if addedTags:
+        #    pass
+        else:
+            return web.seeother('/entry/add/')
+
 
 class entryEdit(object):
 
@@ -94,7 +138,7 @@ class entryEdit(object):
                     for t in tagsAdd:
                         t_id = ''
                         tagExists = list(db.select('tags', what='id, entry_num', \
-                                              where='name=$n', vars={'n': t}))
+                                                   where='name=$n', vars={'n': t}))
                         if tagExists:
                             db.update('tags', where='name=$n', entry_num = \
                                       tagExists[0].entry_num + 1, vars = {'n': t})
@@ -117,31 +161,38 @@ class entryEdit(object):
 
             #print entry.category_id, i.category_id
             if i.category_id != entry.category_id and int(entry.category_id) > 0:
-                    oldCat = list(db.select('categories', what='entry_num', where='id=$id', \
-                                            vars={'id': entry.category_id}))
-                    if oldCat[0].entry_num > 0:
-                        db.update('categories', where='id=%s' % entry.category_id, \
-                                  entry_num = int(oldCat[0].entry_num) - 1)
-            # new category
-            newCat = list(db.select('categories', what='id, entry_num', where='id=$id', \
-                                   vars={'id': i.category_id}))
-            db.update('categories', where='id=%s' % newCat[0].id, entry_num=int(newCat[0].entry_num)+1)
-            print i.slug
-            db.update('entries', where='id=%s' % id, category_id=newCat[0].id, \
-                      title=i.title, slug=i.slug, content=i.content)
-            return web.seeother('/entries/')
-        else:
-            datas['f'] = f
-            datas['entry'] = entry
-            return render.entryEdit(**datas)
+                oldCat = list(db.select('categories', what='entry_num', where='id=$id', \
+                                        vars={'id': entry.category_id}))
+                if oldCat[0].entry_num > 0:
+                    db.update('categories', where='id=%s' % entry.category_id, \
+                              entry_num = int(oldCat[0].entry_num) - 1)
+                    # new category
+                    newCat = list(db.select('categories', what='id, entry_num', where='id=$id', \
+                                            vars={'id': i.category_id}))
+                    db.update('categories', where='id=%s' % newCat[0].id, entry_num=int(newCat[0].entry_num)+1)
+                    print i.slug
+                    db.update('entries', where='id=%s' % id, category_id=newCat[0].id, \
+                              title=i.title, slug=i.slug, content=i.content)
+                    return web.seeother('/entries/')
+                else:
+                    datas['f'] = f
+                    datas['entry'] = entry
+                    return render.entryEdit(**datas)
 
 
 class entryDel(object):
     def GET(self, id):
         # delete the comment reference
         db.query("DELETE FROM comments WHERE entry_id=$id", vars={'id': id})
+        # update the categories table
+        catId = list(db.select('entries', what='category_id', where='id=%d' % int(id)))
+        db.query("UPDATE categories SET entry_num = entry_num - 1 WHERE id=%d" % int(catId[0].category_id))
+        # set the tags table entry_num - 1
+        tags = list(db.select('entry_tag', what='tag_id', where='entry_id=%d' % int(id)))
+        if tags:
+            for one in tags:
+                db.query("UPDATE tags SET entry_num = entry_num - 1 WHERE id=%d" % one.tag_id)
         # delete the entry_tag table
-        #et = list(db.query("SELECT * FROM entry_tag WHERE entry_id=$id", vars={'id': id}))
         db.query("DELETE FROM entry_tag WHERE entry_id=$id", vars={'id': id})
         #for t in et:
         #    db.query("DELETE FROM tags WHERE id=$tag_id", vars={'tag_id': t.tag_id})
@@ -189,6 +240,22 @@ class tags(object):
         datas['tags'] = tags
         return render.tags(**datas)
 
+class tagAdd(object):
+    def GET(self):
+        f = tagForm()
+        datas['f'] = f
+        return render.tagAdd(**datas)
+
+    def POST(self):
+        f = tagForm()
+        i = web.input()
+        if f.validates():
+            db.insert('tags', name=i['name'], entry_num=i['entry_num'])
+            return web.seeother('/tags/')
+        else:
+            datas['f'] = f
+            return render.tagAdd(**datas)
+
 class tagEdit(object):
     def GET(self, id):
         f = tagForm()
@@ -223,19 +290,105 @@ class categories(object):
         datas['cats'] = cats
         return render.categories(**datas)
 
+class categoryAdd(object):
+    def GET(self):
+        f = catForm()
+        datas['f'] = f
+        return render.categoryAdd(**datas)
+
+    def POST(self):
+        f = catForm()
+        i = web.input(slug=None)
+        if f.validates():
+            db.insert('categories', name=i['name'], slug=i['slug'], entry_num=i['entry_num'],\
+                      createdTime=datetime.now(), modifiedTime=datetime.now())
+            return web.seeother('/categories/')
+        else:
+            datas['f'] = f
+            return render.categoryAdd(**datas)
+
 class categoryEdit(object):
     def GET(self, id):
-        pass
+        f = catForm()
+        cat = list(db.select('categories', where='id=$id', vars={'id': id}))[0]
+        f.name.value = cat['name']
+        f.slug.value = cat['slug']
+        f.entry_num.value = cat['entry_num']
+        datas['f'] = f
+        datas['catId'] = cat['id']
+        return render.categoryEdit(**datas)
 
     def POST(self, id):
-        pass
+        f = catForm()
+        if f.validates():
+            db.update('categories', where='id=$id', name=f.name.value, slug=f.slug.value,\
+                      entry_num=f.entry_num.value, modifiedTime=datetime.now(), vars={'id': id})
+            return web.seeother('/categories/')
+        else:
+            datas['f'] = f
+            datas['catId'] = id
+            return render.categoryEdit(**datas)
 
 class categoryDel(object):
     def GET(self, id):
-        pass
+        entry = db.select('entries', what='slug', where='id=$id', vars={'id': id})
+        if not len(entry) > 0:
+            return web.seeother('/categories/')
+        else:
+            db.delete('categories', where='id=$id', vars={'id': id})
+            return web.seeother('/categories/')
 
 
 class links(object):
     def GET(self):
-        pass
+        links = list(db.select('links'))
+        datas['links'] = links
+        return render.links(**datas)
+
+class linkAdd(object):
+    def GET(self):
+        f = linkForm()
+        datas['f'] = f
+        return render.linkAdd(**datas)
+
+    def POST(self):
+        f = linkForm()
+        i = web.input()
+        if f.validates():
+            db.insert('links', name=i['name'], url=i['url'], description=i['desc'], \
+                      created_time=datetime.now())
+            return web.seeother('/links/')
+        else:
+            datas['f'] = f
+            return render.linkAdd(**datas)
+
+class linkEdit(object):
+    def GET(self, id):
+        f = linkForm()
+        lk = list(db.select('links', where='id=$id', vars=dict(id=id)))[0]
+        f.name.value = lk.name
+        f.url.value = lk.url
+        f.desc.value = lk.description
+        datas['f'] = f
+        datas['linkId'] = lk.id
+        return render.linkEdit(**datas)
+
+    def POST(self, id):
+        f = linkForm()
+        if f.validates():
+            db.update('links', where='id=$id', name=f.name.value, url=f.url.value, \
+                      description=f.desc.value, vars=dict(id=id))
+            return web.seeother('/links/')
+        else:
+            datas['f'] = f
+            datas['linkId'] = id
+            return render.linkEdit(**datas)
+
+class linkDel(object):
+    def GET(self, id):
+        if id:
+            db.delete('links', where='id=$id', vars=dict(id=id))
+
+        return web.seeother('/links/')
+
 

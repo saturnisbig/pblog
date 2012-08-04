@@ -29,3 +29,17 @@ tagForm = form.Form(
         form.Textbox('entry_num', description=u'文章数'),
         form.Button('submit', type='submit', html=u'提交')
     )
+
+catForm = form.Form(
+        form.Textbox('name', form.notnull, description=u'类别'),
+        form.Textbox('slug', form.notnull, description=u'slug'),
+        form.Textbox('entry_num', description=u'文章数'),
+        form.Button('submit', type='submit', html=u'提交')
+    )
+
+linkForm = form.Form(
+    form.Textbox('name', form.Validator("名称需要", lambda i: not (i == "")), description=u'链接名称'),
+        form.Textbox('url', form.notnull, description=u'链接地址'),
+        form.Textbox('desc', form.notnull, description=u'链接描述'),
+        form.Button('submit', type='submit', html=u'提交')
+    )

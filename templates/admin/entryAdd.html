@@ -1,5 +1,5 @@
 <%inherit file="base.html" />
-<%def name="title()">修改日志</%def>
+<%def name="title()">新增日志</%def>
 
 <link rel="stylesheet" href="/static/js/markitup/skins/markitup/style.css" type="text/css" media="screen" charset="utf-8"/>
 <link rel="stylesheet" href="/static/js/markitup/sets/default/style.css" type="text/css" media="screen" charset="utf-8"/>
@@ -16,28 +16,23 @@ $(document).ready(function() {
 
 
 <p><a href="/admin/entries/">返回日志列表</a></p>
-% if entry:
-<div id="entry_edit">
-    <form action="/admin/entry/edit/${ entry.id }/" method="POST" id="entry_form">
+<div id="entryAdd">
+    <form action="/admin/entry/add/" method="POST" id="entryForm">
         <table>
             <tr>
                 <th>标题</th>
-                <td><input type="text" name="title" value="${ f.title.value }" /></td>
+                <td><input type="text" name="title" value="" /></td>
             </tr>
             <tr>
                 <th>Slug</th>
-                <td><input type="text" name="slug" value="${ f.slug.value }" /></td>
+                <td><input type="text" name="slug" value="" /></td>
             </tr>
             <tr>
                 <th>分类</th>
                 <td>
                     <select name="category_id">
                         % for one in categories:
-                        <option value="${ one.id }" 
-                        % if one.id == entry.category_id:
-                        selected="selected"
-                        % endif
-                        >
+                        <option value="${ one.id }">
                         ${ one.name }(${ one.entry_num })
                         </option>
                         % endfor
@@ -46,19 +41,17 @@ $(document).ready(function() {
             </tr>
             <tr>
                 <th>标签</th>
-                <td><input type="text" name="tags" value="${ entry.tags }" /></td>
+                <td><input type="text" name="tags" /></td>
             </tr>
             <tr>
                 <th>正文</th>
-                <td><textarea name="content" id="markItUp">${ entry.content }</textarea></td>
+                <td><textarea name="content" id="markItUp"></textarea></td>
             </tr>
             <tr>
                 <th>&nbsp;</th>
-                <td><input type="submit" value="更新日志" /></td>
+                <td><input type="submit" value="新增日志" /></td>
             </tr>
         </table>
     </form>
 </div>
-% else:
-<p>文章不存在</p>
-% endif
+
