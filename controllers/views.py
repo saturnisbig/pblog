@@ -8,15 +8,15 @@ from datetime import datetime
 import time
 from cache import mcache
 
-datas = dict()
+d = dict()
 
 def get_posts():
     pass
 
 def my_hook():
-    datas['categories'] = db.select('categories')
-    datas['tags'] = db.select('tags')
-    datas['links'] = db.select('links')
+    d['categories'] = db.select('categories')
+    d['tags'] = db.select('tags')
+    d['links'] = db.select('links')
 
 
 class index(object):
@@ -33,11 +33,11 @@ class index(object):
         categories = db.select('categories')
         tags = db.select('tags')
         links = db.select('links')
-        datas['entries'] = entries
-        #datas['categories'] = categories
-        #datas['tags'] = tags
-        #datas['links'] = links
-        return render.index(**datas)
+        d['entries'] = entries
+        #d['categories'] = categories
+        #d['tags'] = tags
+        #d['links'] = links
+        return render.index(**d)
 
 class entry(object):
     def GET(self, slug):
@@ -47,10 +47,10 @@ class entry(object):
         #for one in entry:
         #    one.tags = db.query("select * from tags t left join entry_tag et on et.tag_id=t.id where et.entry_id=$id", vars={'id':one.entry_id})
         comments = db.query("SELECT * FROM comments c WHERE c.entry_id=$id", vars={'id': entry[0].entry_id})
-        datas['entry'] = entry[0]
+        d['entry'] = entry[0]
         if len(comments) > 0:
-            datas['comments'] = comments
-        return render.entry(**datas)
+            d['comments'] = comments
+        return render.entry(**d)
 
 class page(object):
     def GET(self):
@@ -63,17 +63,17 @@ class tag(object):
         entry_ids = [str(i['id']) for i in ids]
         entries = list(db.query("select en.id AS entry_id, en.title AS entry_title, en.slug AS entry_slug, en.content AS entry_content, en.created_time AS entry_created_time, c.name AS entry_category, en.comment_num from entries en LEFT JOIN categories c ON en.category_id=c.id where en.id in ($ids)", vars={'ids': ','.join(entry_ids)}))
 
-        datas['entries'] = entries
-        datas['slug'] = tag
-        return render.tag(**datas)
+        d['entries'] = entries
+        d['slug'] = tag
+        return render.tag(**d)
         #raise web.seeother("/404/")
 
 class category(object):
     def GET(self, c):
         entries = list(db.query("select en.id AS entry_id, en.title AS entry_title, en.slug AS entry_slug, en.content AS entry_content, en.created_time AS entry_created_time, c.name AS entry_category, en.comment_num from entries en LEFT JOIN categories c ON en.category_id=c.id where c.name=$c", vars={'c': c}))
-        datas['entries'] = entries
-        datas['slug'] = c
-        return render.category(**datas)
+        d['entries'] = entries
+        d['slug'] = c
+        return render.category(**d)
 
 class addComment(object):
     def POST(self):
@@ -84,10 +84,10 @@ class addComment(object):
         db.insert('comments', entry_id=i.id, email=i.email, username=i.username, url=i.url, comment=i.comment,created_time=created_time)
         entry = db.select('entries',what='comment_num', where='id=%s' % i.id)
         db.update('entries', where = 'id=%s' % i.id, comment_num = entry[0].comment_num + 1)
-        datas['datas'] = i
-        datas['created_time'] = created_time
+        d['d'] = i
+        d['created_time'] = created_time
 
-        return render.comment(**datas)
+        return render.comment(**d)
 
 class pageNotFound(object):
     def GET(self):

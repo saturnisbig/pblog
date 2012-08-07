@@ -233,7 +233,6 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set whichwrap=b,s,<,>,h,l
 set wildignore=*.pyc
 set wildmenu
-set window=38
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -243,50 +242,54 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
+badd +56 static/styles/admin.css
 badd +11 ~/Documents/Wiki/Default/diary/2012-07-30.wiki
 badd +8 ~/Documents/tblog/pelican.conf.py
 badd +6 ~/Documents/tblog/src/tpl.md
 badd +56 ~/Documents/tblog/Makefile
-badd +932 ~/.vimrc
+badd +838 ~/.vimrc
 badd +49 controllers/adminviews.py
-badd +15 admin.py
-badd +12 templates/admin/index.html
-badd +46 static/sql/tables.sql
+badd +10 admin.py
+badd +2 templates/admin/index.html
+badd +7 static/sql/tables.sql
 badd +4 templates/admin/entries.html
-badd +29 templates/admin/base.html
-badd +4 static/styles/admin.css
+badd +19 templates/admin/base.html
 badd +8 static/styles/style.css
 badd +12 ~/projects/aplus/static/styles/style.css
-badd +44 controllers/views.py
+badd +12 controllers/views.py
 badd +18 templates/admin/entryEdit.html
 badd +19 static/sql/insert.sql
-badd +11 config/url.py
+badd +8 config/url.py
 badd +6 form.py
 badd +10 templates/base.html
 badd +31 static/js/markitup/sets/default/set.js
 badd +12 static/js/markitup/sets/markdown/style.css
-badd +1 templates/admin/comments.html
-badd +13 forms.py
+badd +14 templates/admin/comments.html
+badd +11 forms.py
 badd +4 templates/admin/commentEdit.html
 badd +4 templates/admin/tags.html
 badd +8 templates/admin/tagEdit.html
 badd +4 templates/admin/categories.html
-badd +7 static/sql/category.sql
+badd +2 static/sql/category.sql
 badd +9 ~/Documents/Wiki/Default/index.wiki
 badd +4 ~/Documents/Wiki/Default/HowTos.wiki
-badd +11 ~/Documents/Wiki/Default/MySQLHowTos.wiki
+badd +54 ~/Documents/Wiki/Default/MySQLHowTos.wiki
 badd +13 ~/Documents/Wiki/Default/Markdown.wiki
 badd +4 templates/admin/categoryEdit.html
 badd +4 templates/admin/links.html
 badd +7 templates/admin/linkEdit.html
-badd +2 templates/admin/entryAdd.html
+badd +38 templates/admin/entryAdd.html
 badd +2 templates/admin/add.html
-badd +0 templates/admin/tagAdd.html
+badd +1 templates/admin/tagAdd.html
 badd +4 templates/admin/categoryAdd.html
 badd +3 ~/Documents/Wiki/Default/diary/2012-08-04.wiki
-badd +3 ~/Documents/Wiki/Default/diary/diary.wiki
+badd +2 ~/Documents/Wiki/Default/diary/diary.wiki
 badd +1 ~/Documents/Wiki/Default/diary/2012-05-25.wiki
 badd +5 templates/admin/linkAdd.html
+badd +23 pblog.py
+badd +8 ../aplus/aplus.py
+badd +1 ~/Documents/Wiki/Default/diary/2012-08-07.wiki
+badd +27 templates/admin/login.html
 args controllers/adminviews.py
 edit controllers/adminviews.py
 set splitbelow splitright
@@ -345,7 +348,7 @@ setlocal filetype=python
 endif
 setlocal foldcolumn=0
 set nofoldenable
-setlocal nofoldenable
+setlocal foldenable
 setlocal foldexpr=0
 setlocal foldignore=#
 set foldlevel=1
@@ -416,12 +419,576 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 359 - ((17 * winheight(0) + 17) / 35)
+18
+normal zo
+19
+normal zo
+20
+normal zo
+22
+normal zo
+19
+normal zo
+18
+normal zo
+26
+normal zo
+27
+normal zo
+32
+normal zo
+35
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+37
+normal zo
+39
+normal zo
+40
+normal zo
+39
+normal zo
+35
+normal zo
+47
+normal zo
+48
+normal zo
+32
+normal zo
+26
+normal zo
+51
+normal zo
+52
+normal zo
+51
+normal zo
+57
+normal zo
+60
+normal zo
+57
+normal zo
+74
+normal zo
+76
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+77
+normal zo
+76
+normal zo
+74
+normal zo
+82
+normal zo
+85
+normal zo
+92
+normal zo
+96
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+97
+normal zo
+100
+normal zo
+104
+normal zo
+106
+normal zo
+108
+normal zo
+111
+normal zo
+106
+normal zo
+104
+normal zo
+96
+normal zo
+116
+normal zo
+92
+normal zo
+82
+normal zo
+121
+normal zo
+123
+normal zo
+128
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+130
+normal zo
+128
+normal zo
+135
+normal zo
+123
+normal zo
+139
+normal zo
+142
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+149
+normal zo
+142
+normal zo
+139
+normal zo
+160
+normal zo
+165
+normal zo
+166
+normal zo
+179
+normal zo
+180
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+182
+normal zo
+184
+normal zo
+185
+normal zo
+185
+normal zo
+185
+normal zo
+184
+normal zo
+189
+normal zo
+180
+normal zo
+179
+normal zo
+195
+normal zo
+196
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+197
+normal zo
+200
+normal zo
+196
+normal zo
+195
+normal zo
+166
+normal zo
+205
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+206
+normal zo
+208
+normal zo
+209
+normal zo
+209
+normal zo
+209
+normal zo
+208
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+212
+normal zo
+216
+normal zo
+205
+normal zo
+218
+normal zo
+165
+normal zo
+221
+normal zo
+160
+normal zo
+121
+normal zo
+227
+normal zo
+230
+normal zo
+234
+normal zo
+238
+normal zo
+239
+normal zo
+238
+normal zo
+230
+normal zo
+227
+normal zo
+248
+normal zo
+251
+normal zo
+248
+normal zo
+256
+normal zo
+258
+normal zo
+271
+normal zo
+273
+normal zo
+276
+normal zo
+271
+normal zo
+256
+normal zo
+281
+normal zo
+283
+normal zo
+281
+normal zo
+287
+normal zo
+289
+normal zo
+287
+normal zo
+294
+normal zo
+296
+normal zo
+302
+normal zo
+305
+normal zo
+308
+normal zo
+302
+normal zo
+294
+normal zo
+312
+normal zo
+314
+normal zo
+324
+normal zo
+326
+normal zo
+327
+normal zo
+327
+normal zo
+327
+normal zo
+326
+normal zo
+330
+normal zo
+324
+normal zo
+312
+normal zo
+335
+normal zo
+337
+normal zo
+335
+normal zo
+343
+normal zo
+345
+normal zo
+343
+normal zo
+350
+normal zo
+352
+normal zo
+358
+normal zo
+361
+normal zo
+362
+normal zo
+362
+normal zo
+362
+normal zo
+361
+normal zo
+365
+normal zo
+358
+normal zo
+350
+normal zo
+369
+normal zo
+371
+normal zo
+382
+normal zo
+384
+normal zo
+385
+normal zo
+385
+normal zo
+385
+normal zo
+384
+normal zo
+388
+normal zo
+382
+normal zo
+369
+normal zo
+393
+normal zo
+395
+normal zo
+400
+normal zo
+402
+normal zo
+395
+normal zo
+393
+normal zo
+407
+normal zo
+409
+normal zo
+407
+normal zo
+414
+normal zo
+416
+normal zo
+422
+normal zo
+425
+normal zo
+426
+normal zo
+426
+normal zo
+426
+normal zo
+425
+normal zo
+429
+normal zo
+422
+normal zo
+414
+normal zo
+433
+normal zo
+435
+normal zo
+446
+normal zo
+448
+normal zo
+449
+normal zo
+449
+normal zo
+449
+normal zo
+448
+normal zo
+452
+normal zo
+446
+normal zo
+433
+normal zo
+457
+normal zo
+459
+normal zo
+460
+normal zo
+459
+normal zo
+457
+normal zo
+let s:l = 464 - ((25 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-359
-normal! 047l
+464
+normal! 0
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

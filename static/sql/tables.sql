@@ -4,6 +4,12 @@
  * done 12/06/12 19:45:21 
  */
 
+CREATE TABLE user(
+  id int(11) not null auto_increment primary key,
+  username varchar(100) not null,
+  passwd varchar(50) not null,
+);
+
 CREATE TABLE entries(
   id int(11) not null auto_increment primary key,
   title varchar(255) not null,

@@ -7,6 +7,8 @@ pre_fix = 'controllers.'
 
 urls_admin = (
     '/$', pre_fix + 'adminviews.index',
+    '/login/', pre_fix + 'adminviews.login',
+    '/logout/', pre_fix + 'adminviews.logout',
     '/entries/', pre_fix + 'adminviews.entries',
     '/entry/add/', pre_fix + 'adminviews.entryAdd',
     '/entry/edit/(.*)/$', pre_fix + 'adminviews.entryEdit',

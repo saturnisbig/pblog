@@ -3,11 +3,15 @@
 
 import web
 from web import form
-from config.settings import db
 
 usernameValidator = form.regexp(r".{3,15}$", "must be between 3 and 15 characters.")
 emailValidator = form.regexp(r".*@.*", "must be a valid email address.")
 
+loginForm = form.Form(
+        form.Textbox('username', form.notnull, usernameValidator, description=u"用户名："),
+        form.Password('passwd', form.notnull, description=u"密码："),
+        form.Button('submit', type='submit', html=u'提交')
+    )
 
 entryForm = form.Form(
         form.Textbox('title', form.notnull),
@@ -37,6 +41,7 @@ catForm = form.Form(
         form.Button('submit', type='submit', html=u'提交')
     )
 
+# with form.Validator() you can specified the error message.
 linkForm = form.Form(
     form.Textbox('name', form.Validator("名称需要", lambda i: not (i == "")), description=u'链接名称'),
         form.Textbox('url', form.notnull, description=u'链接地址'),
