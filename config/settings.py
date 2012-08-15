@@ -7,7 +7,7 @@ import os, memcache
 
 pageCount = 10
 
-db = web.database(dbn = 'mysql', db='pblog', user='root', pw='root')
+db = web.database(dbn = 'mysql', db='pb', user='root', pw='root')
 
 # memcache
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)

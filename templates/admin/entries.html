@@ -14,9 +14,9 @@
     % for i, entry in enumerate(entries):
     <tr>
         <td>${ i }</td>
-        <td>${ entry.entry_title }</td>
-        <td>${ entry.created_time }</td>
-        <td>${ entry.modified_time }</td>
+        <td>${ entry.title}</td>
+        <td>${ entry.createdTime }</td>
+        <td>${ entry.modifiedTime }</td>
         <td>
             <a href="/admin/entry/edit/${ entry.id }/">编辑</a>
             <a href="/admin/entry/del/${ entry.id }/">删除</a>

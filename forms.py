@@ -7,6 +7,14 @@ from web import form
 usernameValidator = form.regexp(r".{3,15}$", "must be between 3 and 15 characters.")
 emailValidator = form.regexp(r".*@.*", "must be a valid email address.")
 
+commentForm = form.Form(
+        form.Textbox('username', usernameValidator, description=u'用户名'),
+        form.Textbox('email', emailValidator, description=u'邮箱地址'),
+        form.Textarea('content', form.notnull, description=u'留言内容'),
+        form.Textbox('url', description=u'个人网站'),
+        form.Button('submit', type='submit', html=u'留言'),
+    )
+
 loginForm = form.Form(
         form.Textbox('username', form.notnull, usernameValidator, description=u"用户名："),
         form.Password('passwd', form.notnull, description=u"密码："),

@@ -4,7 +4,7 @@
         <div class="modBody">
             <ul>
                 % for t in tags:
-                    <li><a href="/tag/${t.name}/">${t.name}<span>[${t.entry_num}]</span></a></li>
+                    <li><a href="/tag/${t.name}/">${t.name}<span>[${t.entryNum}]</span></a></li>
                 % endfor
                 <!-- 
                 <li><a href="#1">Linux <span class="count">[3]</span></a></li>
@@ -20,7 +20,7 @@
             <ul>
                 % if categories:
                     % for c in categories:
-                    <li><a href="/category/${c.slug}/">${c.name}<span>[${c.entry_num}]</span></a></li>
+                    <li><a href="/category/${c.slug}/">${c.name}<span>[${c.entryNum}]</span></a></li>
                     % endfor
                 % endif
                 <!--

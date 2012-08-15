@@ -30,10 +30,10 @@ $(document).ready(function() {
             <tr>
                 <th>分类</th>
                 <td>
-                    <select name="category_id">
+                    <select name="categoryId">
                         % for one in categories:
                         <option value="${ one.id }">
-                        ${ one.name }(${ one.entry_num })
+                        ${ one.name }(${ one.entryNum })
                         </option>
                         % endfor
                     </select>

@@ -9,22 +9,19 @@
         <div class="blog">
             <div class="blogHeader">
                 <h2>
-                    <a href="/entry/${entry.entry_slug}/">${entry.entry_title}</a>
-                    <span class="category"> - [ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span>
+                    <a href="/entry/${entry.slug}/">${entry.title}</a>
+                    <span class="category"> - [ <a href="/category/${entry.cat}/">${entry.cat}</a>]</span>
                 </h2>
-                <!--<h3>
-                    ${entry.entry_created_time}
-                </h3>-->
             </div>
             <div class="blogBody">
-                ${entry.entry_content}
+                ${entry.content}
             </div>
             <div class="blogFooter">
                 <div class="tags">
                     Tag: 
                     % if entry.tags:
                     % for tag in entry.tags:
-                        <a href="/tag/${tag.name}/"><span>${ tag.name}</span></a> 
+                        <a href="/tag/${tag.name}/"><span>${ tag.name }</span></a> 
                     % endfor
                     % else:
                     没有标签
@@ -32,13 +29,13 @@
                 </div>
                 <div class="blogInfo">
                     <span class="author">布丁</span>
-                    发表于<span class="time">${entry.entry_created_time}</span>
+                    发表于<span class="time">${entry.createdTime}</span>
                     |
-                    <a href="/entries/${entry.entry_slug}/" class="readmore">阅读全文</a>
+                    <a href="/entry/${entry.slug}/" class="readmore">阅读全文(${ entry.viewNum })</a>
                     |
-                    <a href="#" class="cmt">评论<span class="count">${entry.comment_num}</span></a>
+                    <a href="/entry/${entry.slug}/" class="cmt">评论<span class="count">${entry.commentNum}</span></a>
                     |
-                    <a href="#" class="edit">编辑</a>
+                    <a href="/admin/entry/edit/${ entry.entryId }/" class="edit">编辑</a>
                 </div>
             </div>
         </div>

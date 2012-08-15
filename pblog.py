@@ -14,8 +14,11 @@ if web.config.get('_session') is None:
 else:
     session = web.config._session
 
+#web.template.Template.globals['context'] = web.config._session
+
 def session_hook():
     web.ctx.session = session
+
 
 # session hook, use with sub-app.
 app.add_processor(web.loadhook(session_hook))

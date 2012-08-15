@@ -1,24 +1,37 @@
 <%inherit file="base.html" />
 
-<%def name="title()">${entry.entry_title}</%def>
+<%def name="title()">${entry.title}</%def>
 
 <div id="content">
   <div class="blogList">
     <div class="blog">
       <div class="pageLink">
+        % if preEntry:
         <span class="pre">
-          <a href="#">&lt;&lt;&nbsp;&nbsp;上一篇</a>
+            <a href="/entry/${ preEntry.slug }/">&lt;&lt;&nbsp;&nbsp;上一篇</a>
         </span>
+        % else:
+        <span class="pre">
+            没有前一篇
+        </span>
+        % endif
         |
         <span class="top">
           <a href="/">首页</a>
         </span>
         |
+        % if nextEntry:
         <span class="next">
-          <a href="#">下一篇&nbsp;&nbsp;&gt;&gt;</a></span> 
+            <a href="/entry/${ nextEntry.slug }/">下一篇&nbsp;&nbsp;&gt;&gt;</a>
+        </span> 
+        % else:
+        <span class="next">
+            没有后一篇
+        </span> 
+        % endif
       </div>
       <div class="blogHeader">
-        <h2><a href="/entry/${entry.entry_slug}/">${entry.entry_title}</a><span class="category">-[ <a href="/category/${entry.entry_category}/">${entry.entry_category}</a>]</span></h2><h3>6/5/2012</h3>
+          <h2><a href="/entry/${entry.slug}/">${entry.title}</a><span class="category">-[ <a href="/category/${entry.cat}/">${entry.cat}</a>]</span></h2><h3>${entry.createdTime}</h3>
       </div>
       <div class="blogBody">
         <p class="cc-lisence" style="line-height:180%;">
@@ -30,7 +43,7 @@
           <br>
           <br>
         </p>
-        ${entry.entry_content}
+        ${entry.content}
         <div class="addFav">
           <br>
           收藏到：
@@ -44,29 +57,30 @@
           Tag: 
           % if entry.tags:
             % for t in entry.tags:
-              <a href="/tag/${t.name}/"><span>${ t.name}</span></a> 
+              <a href="/tag/${ t.name }/"><span>${ t.name }</span></a> 
             % endfor
           % endif
         </div>
         <div class="blogInfo">
           <span class="author">布丁</span>
-          发表于<span class="time">${entry.entry_created_time}</span>
+          发表于<span class="time">${entry.createdTime}</span>
           |
-          <a href="#" class="edit">编辑</a>
+          <a href="/admin/entry/edit/${ entry.id}/" class="edit">编辑</a>
           |
           <a href="#" class="share">分享<span class="count">0</span></a>
         </div>
       </div>
     </div>
-    % if comments:
     <div id="comment-list">
-      <h2>${ entry.comment_num }条评论</h2>
-      %for c in comments:
+      <h2><a href="#comment">${ entry.commentNum}条评论</a></h2>
+      % if entry.comments:
+      %for c in entry.comments:
       <div class="comment-node">
         <div class="comment-controls"><a href="#">回复</a></div>
+            <div class="comment-controls"><a href="/admin/comment/${ c.id }/">编辑</a></div>
         <div class="comment-author">${ c.username }</div>
         <div class="comment-meta">
-          Posted at: ${ c.created_time }
+          Posted at: ${ c.createdTime }
         </div>
         <div class="comment-content">
           ${c.comment}
@@ -78,8 +92,8 @@
 
     <div id="commentForm">
       <h2>发表评论</h2>
-      <form method="post" action="/add_comment/" name="cForm">
-        <input type="hidden" name="id" value="${entry.entry_id}" />
+      <form method="post" action="/entry/${ entry.slug }/" name="cForm">
+        <input type="hidden" name="entryId" value="${entry.id}" />
         <fieldset id="fs_nologin">
         </fieldset>
         <fieldset id="fs_login">

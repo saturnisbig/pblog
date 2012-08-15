@@ -34,16 +34,19 @@ class login(object):
         i = web.input()
         if f.validates():
             passwd = hashlib.md5(i.get('passwd')).hexdigest()
-            admin = list(db.select('user', what='passwd', where='username="%s"' \
+            print passwd
+            admin = list(db.select('users', what='passwd', where='username="%s"' \
                                    % i.get('username')))
+            print admin[0].passwd
             if len(admin) > 0:
                 if passwd == admin[0].passwd:
                     web.ctx.session.isAdmin = 1
                     raise web.seeother('/')
-
-            errs = 'username/passwd error.'
-            d['errs'] = errs
-            return render.login(**d)
+            else:
+                errs = 'username/passwd error.'
+                d['f'] = f
+                d['errs'] = errs
+                return render.login(**d)
         else:
             d['f'] = f
             return render.login(**d)
@@ -74,8 +77,8 @@ class index(object):
 class entries(object):
     @login_required
     def GET(self):
-        entries = list(db.query("SELECT title AS entry_title, created_time, \
-                                id, modified_time FROM entries ORDER BY id DESC"))
+        entries = list(db.query("SELECT title, createdTime, \
+                                id, modifiedTime FROM entries ORDER BY id DESC"))
         d['entries'] = entries
         return render.entries(**d)
 
@@ -83,7 +86,7 @@ class entryAdd(object):
     @login_required
     def GET(self):
         # specify the selected columns when query the db.
-        what = 'id, name, entry_num'
+        what = 'id, name, entryNum'
         cats = list(db.select('categories', what=what))
         d['categories'] = cats
         return render.entryAdd(**d)
@@ -92,13 +95,13 @@ class entryAdd(object):
     def POST(self):
         f = entryForm()
         i = web.input(tags=None)
-        catId = i['category_id']
+        catId = i['categoryId']
         if f.validates():
-            entryId = db.insert('entries', title=i['title'], slug=i['slug'], category_id=catId, \
-                                modified_time=datetime.now(), created_time=datetime.now(), content=i['content'])
+            entryId = db.insert('entries', title=i['title'], slug=i['slug'], categoryId=catId, \
+                                modifiedTime=datetime.now(), createdTime=datetime.now(), content=i['content'])
             # print i['tags'] == None, type(i['tags']), len(i['tags'])
             if entryId:
-                db.query("update categories set entry_num = entry_num +1 where id=%d" % int(catId))
+                db.query("update categories set entryNum = entryNum +1 where id=%d" % int(catId))
 
             # i['tags'] == [''] != None, so use len(i['tags']) instead.
             if len(i['tags']) > 0:
@@ -106,11 +109,11 @@ class entryAdd(object):
                 for t in tags:
                     tmpTag = db.select('tags', what='id', where='name="%s"' % t).list()
                     if len(tmpTag) > 0:
-                        db.insert('entry_tag', entry_id=entryId, tag_id=tmpTag[0].id)
-                        db.query("UPDATE tags SET entry_num = entry_num + 1 WHERE id=%d" % tmpTag[0].id)
+                        db.insert('entry_tag', entryId=entryId, tagId=tmpTag[0].id)
+                        db.query("UPDATE tags SET entryNum = entryNum + 1 WHERE id=%d" % tmpTag[0].id)
                     else:
-                        t_id = db.insert('tags', name=t, entry_num=1)
-                        db.insert('entry_tag', entry_id=entryId, tag_id=t_id)
+                        t_id = db.insert('tags', name=t, entryNum=1)
+                        db.insert('entry_tag', entryId=entryId, tagId=t_id)
             return web.seeother('/entries/')
 
         else:
@@ -128,7 +131,7 @@ class entryEdit(object):
         if len(entry) > 0:
             entry = entry[0]
             tags = list(db.query("SELECT t.name AS name FROM tags t LEFT JOIN \
-                                 entry_tag et ON t.id = et.tag_id WHERE et.entry_id \
+                                 entry_tag et ON t.id = et.tagId WHERE et.entryId \
                                  = $id", vars={'id': id}))
             entry.tags = ",".join(t.name for t in tags)
             return entry
@@ -143,11 +146,11 @@ class entryEdit(object):
             f = entryForm()
             f.title.value = entry.title
             f.slug.value = entry.slug
-            #f.category_id.value = entry.category_id
+            #f.categoryId.value = entry.categoryId
             #f.content.value = entry.content
-            categories = list(db.select('categories', what='id, name, entry_num'))
+            categories = list(db.select('categories', what='id, name, entryNum'))
             tags = list(db.query("SELECT t.name AS name FROM tags t LEFT JOIN \
-                                 entry_tag et ON t.id = et.tag_id WHERE et.entry_id \
+                                 entry_tag et ON t.id = et.tagId WHERE et.entryId \
                                  = $id", vars={'id': id}))
             entry.tags = ",".join(t.name for t in tags)
             d['entry'] = entry
@@ -161,7 +164,7 @@ class entryEdit(object):
         entry = self.get_entry(id)
         f = entryForm()
         # set default value for some col in entries table
-        i = web.input(title=None, slug=None, category_id=None, tags=None)
+        i = web.input(title=None, slug=None, categoryId=None, tags=None)
         if f.validates():
             if i.tags is not None:
                 newTags = set([t.strip() for t in i.tags.split(',')])
@@ -179,41 +182,41 @@ class entryEdit(object):
                     # add some tags in new entry
                     for t in tagsAdd:
                         t_id = ''
-                        tagExists = list(db.select('tags', what='id, entry_num', \
+                        tagExists = list(db.select('tags', what='id, entryNum', \
                                                    where='name=$n', vars={'n': t}))
                         if tagExists:
-                            db.update('tags', where='name=$n', entry_num = \
-                                      tagExists[0].entry_num + 1, vars = {'n': t})
-                            #db.query("UPDATE tags SET entry_num = entry_num + 1 WHERE name='%s'" % t)
+                            db.update('tags', where='name=$n', entryNum = \
+                                      tagExists[0].entryNum + 1, vars = {'n': t})
+                            #db.query("UPDATE tags SET entryNum = entry_num + 1 WHERE name='%s'" % t)
                             t_id = tagExists[0].id
                         else:
-                            t_id = db.insert('tags', name=t, entry_num = 1)
+                            t_id = db.insert('tags', name=t, entryNum = 1)
                         #print t_id
-                        db.insert('entry_tag', entry_id=id, tag_id = t_id)
+                        db.insert('entry_tag', entryId=id, tagId = t_id)
 
                 if tagsDel:
                     # delete some original tags in entry
                     for t in tagsDel:
-                        t_id = list(db.select('tags', what='id, entry_num', where='name=$name', \
+                        t_id = list(db.select('tags', what='id, entryNum', where='name=$name', \
                                               vars={'name': t}))
-                        db.delete('entry_tag', where='tag_id=$id',vars={'id': t_id[0].id})
-                        if t_id[0].entry_num == 0:
+                        db.delete('entry_tag', where='tagId=$id',vars={'id': t_id[0].id})
+                        if t_id[0].entryNum == 0:
                             db.delete('tags', where='name=$n', vars={'n': t})
                             #print 'tag deleted:', t_id, t
 
-            #print entry.category_id, i.category_id
-            if i.category_id != entry.category_id and int(entry.category_id) > 0:
-                oldCat = list(db.select('categories', what='entry_num', where='id=$id', \
-                                        vars={'id': entry.category_id}))
-                if oldCat[0].entry_num > 0:
-                    db.update('categories', where='id=%s' % entry.category_id, \
-                              entry_num = int(oldCat[0].entry_num) - 1)
+            #print entry.categoryId, i.categoryId
+            if i.categoryId != entry.categoryId and int(entry.categoryId) > 0:
+                oldCat = list(db.select('categories', what='entryNum', where='id=$id', \
+                                        vars={'id': entry.categoryId}))
+                if oldCat[0].entryNum > 0:
+                    db.update('categories', where='id=%s' % entry.categoryId, \
+                              entryNum = int(oldCat[0].entryNum) - 1)
                     # new category
-                newCat = list(db.select('categories', what='id, entry_num', where='id=$id', \
-                                            vars={'id': i.category_id}))
-                db.update('categories', where='id=%s' % newCat[0].id, entry_num=int(newCat[0].entry_num)+1)
+                newCat = list(db.select('categories', what='id, entryNum', where='id=$id', \
+                                            vars={'id': i.categoryId}))
+                db.update('categories', where='id=%s' % newCat[0].id, entryNum=int(newCat[0].entryNum)+1)
                 print i.slug
-                db.update('entries', where='id=%s' % id, category_id=newCat[0].id, \
+                db.update('entries', where='id=%s' % id, categoryId=newCat[0].id, \
                        title=i.title, slug=i.slug, content=i.content)
             else:
                 db.update('entries', where='id=%s' % id, title=i.title, slug=i.slug, content=i.content)
@@ -228,20 +231,20 @@ class entryDel(object):
     @login_required
     def GET(self, id):
         # delete the comment reference
-        db.query("DELETE FROM comments WHERE entry_id=$id", vars={'id': id})
+        db.query("DELETE FROM comments WHERE entryId=$id", vars={'id': id})
         # update the categories table
-        catId = list(db.select('entries', what='category_id', where='id=%d' % int(id)))
+        catId = list(db.select('entries', what='categoryId', where='id=%d' % int(id)))
         if catId:
-            db.query("UPDATE categories SET entry_num = entry_num - 1 WHERE id=%d" % int(catId[0].category_id))
-        # set the tags table entry_num - 1
-        tags = list(db.select('entry_tag', what='tag_id', where='entry_id=%d' % int(id)))
+            db.query("UPDATE categories SET entryNum = entryNum - 1 WHERE id=%d" % int(catId[0].categoryId))
+        # set the tags table entryNum - 1
+        tags = list(db.select('entry_tag', what='tagId', where='entryId=%d' % int(id)))
         if tags:
             for one in tags:
-                db.query("UPDATE tags SET entry_num = entry_num - 1 WHERE id=%d" % one.tag_id)
+                db.query("UPDATE tags SET entryNum = entryNum - 1 WHERE id=%d" % one.tagId)
                 # delete the entry_tag table
-                db.query("DELETE FROM entry_tag WHERE entry_id=$id", vars={'id': id})
+                db.query("DELETE FROM entry_tag WHERE entryId=$id", vars={'id': id})
                 #for t in et:
-                #    db.query("DELETE FROM tags WHERE id=$tag_id", vars={'tag_id': t.tag_id})
+                #    db.query("DELETE FROM tags WHERE id=$tagId", vars={'tag_id': t.tag_id})
         db.query("DELETE FROM entries WHERE id=$id", vars={'id': id})
         return web.seeother('/entries/')
 
@@ -249,7 +252,7 @@ class comments(object):
     @login_required
     def GET(self):
         #c = list(db.select('comments'))
-        comments = list(db.select('comments', what='id, username, email, comment, created_time'))
+        comments = list(db.select('comments', what='id, username, email, comment, createdTime'))
         d['comments'] = comments
         return render.comments(**d)
 
@@ -261,7 +264,7 @@ class commentEdit(object):
         f.username.value = cmt['username']
         f.email.value = cmt['email']
         f.comment.value = cmt['comment']
-        f.createdTime.value = cmt['created_time']
+        f.createdTime.value = cmt['createdTime']
         d['f'] = f
         # get the cmt id for post.
         d['cmtId'] = cmt['id']
@@ -303,7 +306,7 @@ class tagAdd(object):
         f = tagForm()
         i = web.input()
         if f.validates():
-            db.insert('tags', name=i['name'], entry_num=i['entry_num'])
+            db.insert('tags', name=i['name'], entryNum=i['entryNum'])
             return web.seeother('/tags/')
         else:
             d['f'] = f
@@ -315,7 +318,7 @@ class tagEdit(object):
         f = tagForm()
         tag = list(db.select('tags', where='id=$id', vars={'id': id}))[0]
         f.name.value = tag['name']
-        f.entry_num.value = tag['entry_num']
+        f.entryNum.value = tag['entryNum']
         d['f'] = f
         d['tId'] = tag['id']
         return render.tagEdit(**d)
@@ -324,7 +327,7 @@ class tagEdit(object):
     def POST(self, id):
         f = tagForm()
         if f.validates():
-            db.update('tags', where='id=$id', name=f.name.value, entry_num=f.entry_num.value, \
+            db.update('tags', where='id=$id', name=f.name.value, entryNum=f.entryNum.value, \
                       vars={'id': id})
             return web.seeother('/tags/')
         else:
@@ -336,7 +339,7 @@ class tagDel(object):
     @login_required
     def GET(self, id):
         print id
-        db.delete('entry_tag', where='tag_id=$id', vars={'id': id})
+        db.delete('entry_tag', where='tagId=$id', vars={'id': id})
         db.delete('tags', where='id=$id', vars={'id': id})
         return web.seeother('/tags/')
 
@@ -359,7 +362,7 @@ class categoryAdd(object):
         f = catForm()
         i = web.input(slug=None)
         if f.validates():
-            db.insert('categories', name=i['name'], slug=i['slug'], entry_num=i['entry_num'],\
+            db.insert('categories', name=i['name'], slug=i['slug'], entryNum=i['entryNum'],\
                       createdTime=datetime.now(), modifiedTime=datetime.now())
             return web.seeother('/categories/')
         else:
@@ -373,7 +376,7 @@ class categoryEdit(object):
         cat = list(db.select('categories', where='id=$id', vars={'id': id}))[0]
         f.name.value = cat['name']
         f.slug.value = cat['slug']
-        f.entry_num.value = cat['entry_num']
+        f.entryNum.value = cat['entryNum']
         d['f'] = f
         d['catId'] = cat['id']
         return render.categoryEdit(**d)
@@ -383,7 +386,7 @@ class categoryEdit(object):
         f = catForm()
         if f.validates():
             db.update('categories', where='id=$id', name=f.name.value, slug=f.slug.value,\
-                      entry_num=f.entry_num.value, modifiedTime=datetime.now(), vars={'id': id})
+                      entryNum=f.entryNum.value, modifiedTime=datetime.now(), vars={'id': id})
             return web.seeother('/categories/')
         else:
             d['f'] = f
@@ -424,7 +427,7 @@ class linkAdd(object):
         i = web.input()
         if f.validates():
             db.insert('links', name=i['name'], url=i['url'], description=i['desc'], \
-                      created_time=datetime.now())
+                      createdTime=datetime.now())
             return web.seeother('/links/')
         else:
             d['f'] = f
