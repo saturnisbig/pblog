@@ -3,129 +3,129 @@
 <%def name="title()">${entry.title}</%def>
 
 <div id="content">
-  <div class="blogList">
-    <div class="blog">
-      <div class="pageLink">
-        % if preEntry:
-        <span class="pre">
-            <a href="/entry/${ preEntry.slug }/">&lt;&lt;&nbsp;&nbsp;上一篇</a>
-        </span>
-        % else:
-        <span class="pre">
-            没有前一篇
-        </span>
-        % endif
-        |
-        <span class="top">
-          <a href="/">首页</a>
-        </span>
-        |
-        % if nextEntry:
-        <span class="next">
-            <a href="/entry/${ nextEntry.slug }/">下一篇&nbsp;&nbsp;&gt;&gt;</a>
-        </span> 
-        % else:
-        <span class="next">
-            没有后一篇
-        </span> 
-        % endif
-      </div>
-      <div class="blogHeader">
-          <h2><a href="/entry/${entry.slug}/">${entry.title}</a><span class="category">-[ <a href="/category/${entry.cat}/">${entry.cat}</a>]</span></h2><h3>${entry.createdTime}</h3>
-      </div>
-      <div class="blogBody">
-        <p class="cc-lisence" style="line-height:180%;">
-          <a target="_blank" href="http://creativecommons.org/licenses/by/3.0/deed.zh">版权声明</a>
-          ：转载时请以超链接形式标明文章原始出处和作者信息及
-          <a target="_blank" href="#">本声明</a>
-          <br>
-          <a href="#">http://teddy007.blogbus.com/logs/163801527.html</a>
-          <br>
-          <br>
-        </p>
-        ${entry.content}
-        <div class="addFav">
-          <br>
-          收藏到：
-          <span class="delicious">
-            <a href="#">Del.icio.us</a>
-          </span>
-        </div>
-      </div>
-      <div class="blogFooter">
-        <div class="tags">
-          Tag: 
-          % if entry.tags:
-            % for t in entry.tags:
-              <a href="/tag/${ t.name }/"><span>${ t.name }</span></a> 
+    <div class="blogList">
+        <div class="blog">
+            <div class="pageLink">
+                % if preEntry:
+                <span class="pre">
+                    <a href="/entry/${ preEntry.slug }/">&lt;&lt;&nbsp;&nbsp;上一篇</a>
+                </span>
+                % else:
+                <span class="pre">
+                    没有前一篇
+                </span>
+                % endif
+                |
+                <span class="top">
+                    <a href="/">首页</a>
+                </span>
+                |
+                % if nextEntry:
+                <span class="next">
+                    <a href="/entry/${ nextEntry.slug }/">下一篇&nbsp;&nbsp;&gt;&gt;</a>
+                </span> 
+                % else:
+                <span class="next">
+                    没有后一篇
+                </span> 
+                % endif
+            </div>
+            <div class="blogHeader">
+                <h2><a href="/entry/${entry.slug}/">${entry.title}</a><span class="category">-[ <a href="/category/${entry.category.name}/">${entry.category.name}</a>]</span></h2><h3>${entry.createdTime}</h3>
+            </div>
+            <div class="blogBody">
+                <p class="cc-lisence" style="line-height:180%;">
+                    <a target="_blank" href="http://creativecommons.org/licenses/by/3.0/deed.zh">版权声明</a>
+                    ：转载时请以超链接形式标明文章原始出处和作者信息及
+                    <a target="_blank" href="#">本声明</a>
+                    <br>
+                    <a href="#">http://teddy007.blogbus.com/logs/163801527.html</a>
+                    <br>
+                    <br>
+                </p>
+                ${entry.content}
+                <div class="addFav">
+                    <br>
+                    收藏到：
+                    <span class="delicious">
+                        <a href="#">Del.icio.us</a>
+                    </span>
+                </div>
+            </div>
+            <div class="blogFooter">
+                <div class="tags">
+                    Tag: 
+                    % if entry.tags:
+                    % for t in entry.tags:
+                    <a href="/tag/${ t.name }/"><span>${ t.name }</span></a> 
+                    % endfor
+                    % endif
+                </div>
+                <div class="blogInfo">
+                    <span class="author">布丁</span>
+                    发表于<span class="time">${entry.createdTime}</span>
+                    |
+                    <a href="/admin/entry/edit/${ entry.id}/" class="edit">编辑</a>
+                    |
+                    <a href="#" class="share">分享<span class="count">0</span></a>
+                </div>
+            </div>
+        <div id="comment-list">
+            <h2><a href="#comment">${ entry.commentNum}条评论</a></h2>
+            % if entry.comments:
+            %for c in entry.comments:
+            <div class="comment-node">
+                <div class="comment-controls"><a href="#">回复</a></div>
+                <div class="comment-controls"><a href="/admin/comment/${ c.id }/">编辑</a></div>
+                <div class="comment-author">${ c.username }</div>
+                <div class="comment-meta">
+                    Posted at: ${ c.createdTime }
+                </div>
+                <div class="comment-content">
+                    ${c.comment}
+                </div>
+            </div> 
             % endfor
-          % endif
+        </div> <!-- comment-list ends -->
+        % endif
         </div>
-        <div class="blogInfo">
-          <span class="author">布丁</span>
-          发表于<span class="time">${entry.createdTime}</span>
-          |
-          <a href="/admin/entry/edit/${ entry.id}/" class="edit">编辑</a>
-          |
-          <a href="#" class="share">分享<span class="count">0</span></a>
-        </div>
-      </div>
-    </div>
-    <div id="comment-list">
-      <h2><a href="#comment">${ entry.commentNum}条评论</a></h2>
-      % if entry.comments:
-      %for c in entry.comments:
-      <div class="comment-node">
-        <div class="comment-controls"><a href="#">回复</a></div>
-            <div class="comment-controls"><a href="/admin/comment/${ c.id }/">编辑</a></div>
-        <div class="comment-author">${ c.username }</div>
-        <div class="comment-meta">
-          Posted at: ${ c.createdTime }
-        </div>
-        <div class="comment-content">
-          ${c.comment}
-        </div>
-      </div> 
-      % endfor
-    </div> <!-- comment-list ends -->
-    % endif
 
-    <div id="commentForm">
-      <h2>发表评论</h2>
-      <form method="post" action="/entry/${ entry.slug }/" name="cForm">
-        <input type="hidden" name="entryId" value="${entry.id}" />
-        <fieldset id="fs_nologin">
-        </fieldset>
-        <fieldset id="fs_login">
-          <div>
-            <label for="username">用户名</label>
-            <input id="username" class="textField" type="text" tabindex="1" name="username" />
-            <span class="emailnotice" style="margin-left: 5px;color: #cccccc;">
-              <a href="#" target-"_blank">请登录后留言</a>
-            </span>
-          </div>
-          <div>
-            <label for="email">邮&#12288;箱</label>
-            <input id="email" class="textField" type="text" tabindex="2" name="email"/> 
-          </div>
-          <div>
-            <label for="url">个人网站</label>
-            <input id="url" class="textField" type="text" tabindex="2" name="url"/> 
-          </div>
-          <!--
-          <div>
-            <label for="password">密&#12288;码</label>
-            <input id="password" class="textField" type="password" tabindex="2" name="password"/> 
-          </div>
-          -->
-        </fieldset>
-        <div>
-          <textarea id="comment" name="comment" rows="8" tabindex="3"></textarea>
+        <div id="commentForm">
+            <h2>发表评论</h2>
+            <form method="post" action="/entry/${ entry.slug }/" name="cForm">
+                <input type="hidden" name="entryId" value="${entry.id}" />
+                <fieldset id="fs_nologin">
+                </fieldset>
+                <fieldset id="fs_login">
+                    <div>
+                        <label for="username">用户名</label>
+                        <input id="username" class="textField" type="text" tabindex="1" name="username" />
+                        <span class="emailnotice" style="margin-left: 5px;color: #cccccc;">
+                            <a href="#" target-"_blank">请登录后留言</a>
+                        </span>
+                    </div>
+                    <div>
+                        <label for="email">邮&#12288;箱</label>
+                        <input id="email" class="textField" type="text" tabindex="2" name="email"/> 
+                    </div>
+                    <div>
+                        <label for="url">个人网站</label>
+                        <input id="url" class="textField" type="text" tabindex="2" name="url"/> 
+                    </div>
+                    <!--
+                    <div>
+                        <label for="password">密&#12288;码</label>
+                        <input id="password" class="textField" type="password" tabindex="2" name="password"/> 
+                    </div>
+                    -->
+                </fieldset>
+                <div>
+                    <textarea id="comment" name="comment" rows="8" tabindex="3"></textarea>
+                </div>
+                <div class="submti">
+                    <input id="submit_comment" type="submit" class="button" value="提交" name="addComment"/>
+                </div>
+            </form>
         </div>
-        <div class="submti">
-          <input id="submit_comment" type="submit" class="button" value="提交" name="addComment"/>
-        </div>
-      </form>
     </div>
-  </div>
 </div>

@@ -8,77 +8,45 @@ from datetime import datetime
 import time
 from cache import mcache
 from forms import commentForm
-from models import *
-from sqlalchemy.orm import scoped_session, sessionmaker
-
 
 d = dict()
 
-def get_tags():
-    return web.ctx.orm.query(Tag).order_by('tags.name').all()
-
-def get_links():
-    return web.ctx.orm.query(Link).order_by('links.name').all()
-
-def get_categories():
-    return web.ctx.orm.query(Category).order_by('categories.name').all()
-
-def load_sqla(handler):
-    web.ctx.orm = scoped_session(sessionmaker(bind=engine))
-    d['categories'] = get_categories()
-    d['tags'] = get_tags()
-    d['links'] = get_links()
-
-    try:
-        return handler()
-    except web.HTTPError:
-        web.ctx.orm.commit()
-        raise
-    except:
-        web.ctx.orm.rollback()
-        raise
-    finally:
-        web.ctx.orm.commit()
-        # if the above alone doesn't work, uncomment the following line.
-        #web.ctx.orm.expunge_all()
+def get_posts():
+    pass
 
 def my_hook():
-    pass
-    #d['categories'] = db.select('categories')
-    #d['tags'] = db.select('tags')
-    #d['links'] = db.select('links')
+    d['categories'] = db.select('categories')
+    d['tags'] = db.select('tags')
+    d['links'] = db.select('links')
 
 
 class index(object):
     def GET(self):
         #return render.index()
-        #sql = "select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.viewNum, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId = c.id ORDER BY en.createdTime asc"
-        #entries = list(db.query(sql))
+        sql = "select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.viewNum, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId = c.id ORDER BY en.createdTime asc"
+        entries = list(db.query(sql))
+        for entry in entries:
+            entry.tags = db.query("select * from tags t left join entry_tag et on t.id=et.tagId where et.entryId=$id", vars={'id': entry.entryId})
         #for entry in entries:
-        #    entry.tags = db.query("select * from tags t left join entry_tag et on t.id=et.tagId where et.entryId=$id", vars={'id': entry.entryId})
-        entries = web.ctx.orm.query(Entry).all()
-        #print entries
-        #for entry in entries:
-        #    print entry.title, entry.slug, entry.category.name
-        #    if len(entry.tags):
-        #        for t in entry.tags:
-        #            print t.name, t.entryNum
-            #for t in entry.tags:
-            #    print 'tags:', t.name
-        #for entry in entries:
-        #    entry.tags = web.ctx.orm.query(entry_tag).join(Tag).filter(entry_tag.entry_id=entry.id)
-
+        #    category = db.select('categories', where="id=$id", vars={'id': entry.categoryId})
+        #    if category:
+        #        entry.category = category[0].name
+        #categories = db.select('categories')
+        #tags = db.select('tags')
+        #links = db.select('links')
+        #d['categories'] = categories
+        #d['tags'] = tags
+        #d['links'] = links
         d['entries'] = entries
         return render.index(**d)
 
 class entry(object):
 
     def get_entry(self, slug):
-        entry = web.ctx.orm.query(Entry).filter(Entry.slug == slug).all()
-        #entry = list(db.query("select en.id, en.title, en.slug, en.content, en.createdTime AS createdTime, c.name AS cat, en.commentNum, en.viewNum from entries en LEFT JOIN categories c ON en.categoryId = c.id where en.slug=$slug", vars={'slug': slug}))
-        #for one in entry:
-        #    one.tags = db.query("select * from tags t LEFT JOIN entry_tag et ON t.id = et.tagId WHERE et.entryId = $id", vars={'id': one.id})
-        #    one.comments = db.query("SELECT * FROM comments c WHERE c.entryId=$id", vars={'id': one.id})
+        entry = list(db.query("select en.id, en.title, en.slug, en.content, en.createdTime AS createdTime, c.name AS cat, en.commentNum, en.viewNum from entries en LEFT JOIN categories c ON en.categoryId = c.id where en.slug=$slug", vars={'slug': slug}))
+        for one in entry:
+            one.tags = db.query("select * from tags t LEFT JOIN entry_tag et ON t.id = et.tagId WHERE et.entryId = $id", vars={'id': one.id})
+            one.comments = db.query("SELECT * FROM comments c WHERE c.entryId=$id", vars={'id': one.id})
 
         if entry:
             return entry[0]
@@ -145,31 +113,19 @@ class page(object):
 
 class tag(object):
     def GET(self, tag):
-        #ts = web.ctx.orm.query(Tag).filter(Tag.name == tag).all()
-        #tags = []
-        #for t in ts:
-        #    print t.entries
-        #    tags.append(t.name)
-        #entry_has_tag = []
-        #entries = web.ctx.orm.query(Entry).all()
-        #for entry in entries:
-        #    for t in entry.tags:
-        #        if t.name in tags:
-        #            entry_has_tag.append(entry)
+        ids = list(db.query("select entryId as id from entry_tag et left join \
+                            tags t on et.tagId = t.id where t.name=$tag", vars={'tag': tag}))
+        entryIds = [str(i['id']) for i in ids]
+        entries = list(db.query("select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId=c.id where en.id in ($ids)", vars={'ids': ','.join(entryIds)}))
 
-        #d['entries'] = entry_has_tag
-        tags = web.ctx.orm.query(Tag).filter(Tag.name == tag).all()
-        entries = tags[0].entries
         d['entries'] = entries
         d['slug'] = tag
-
         return render.tag(**d)
     #raise web.seeother("/404/")
 
 class category(object):
     def GET(self, c):
-        #entries = list(db.query("select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId=c.id where c.name=$c", vars={'c': c}))
-        entries = web.ctx.orm.query(Entry).join(Category).filter(Category.name == c).filter(Entry.categoryId == Category.id).all()
+        entries = list(db.query("select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId=c.id where c.name=$c", vars={'c': c}))
         d['entries'] = entries
         d['slug'] = c
         return render.category(**d)

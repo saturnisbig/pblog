@@ -2,7 +2,7 @@
 # coding: utf-8
 import web
 from config.url import urls
-from controllers.views import my_hook
+from controllers.views import my_hook, load_sqla
 
 app = web.application(urls, globals())
 
@@ -24,6 +24,7 @@ def session_hook():
 app.add_processor(web.loadhook(session_hook))
 
 app.add_processor(web.loadhook(my_hook))
+app.add_processor(load_sqla)
 
 if __name__ == "__main__":
     app.internalerror = web.debugerror

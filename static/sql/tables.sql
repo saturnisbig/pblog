@@ -1,4 +1,5 @@
 /**
+db = web.
  * only links table created.
  * todo: find the errors exists.
  * done 12/06/12 19:45:21 
