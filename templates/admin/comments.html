@@ -10,9 +10,9 @@
         <th>发表时间</th>
         <th>操作</th>
     </tr>
-    % for c in comments:
+    % for i, c in enumerate(comments):
         <tr>
-            <td>${ c.id }</td>
+            <td>${ i }</td>
             <td>${ c.username }</td>
             <td>${ c.email}</td>
             <td>${ c.comment}</td>

@@ -10,6 +10,7 @@ from cache import mcache
 from forms import commentForm
 from models import *
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import func
 
 
 d = dict()
@@ -56,7 +57,7 @@ class index(object):
         #entries = list(db.query(sql))
         #for entry in entries:
         #    entry.tags = db.query("select * from tags t left join entry_tag et on t.id=et.tagId where et.entryId=$id", vars={'id': entry.entryId})
-        entries = web.ctx.orm.query(Entry).all()
+        entries = web.ctx.orm.query(Entry).order_by(Entry.id).all()
         #print entries
         #for entry in entries:
         #    print entry.title, entry.slug, entry.category.name
@@ -98,12 +99,18 @@ class entry(object):
         entry = self.get_entry(slug)
         if entry:
             # select the previous and next entry of current entry.
-            preEntry = list(db.query('SELECT slug FROM entries WHERE id = (SELECT \
-                                     max(id) FROM entries WHERE id < %d)' % int(entry.id)))
-            nextEntry = list(db.query('SELECT slug FROM entries WHERE id = (SELECT \
-                                      min(id) FROM entries WHERE id > %d)' % int(entry.id)))
+            #preEntry = list(db.query('SELECT slug FROM entries WHERE id = (SELECT \
+            #                         max(id) FROM entries WHERE id < %d)' % int(entry.id)))
+            # preEntry is a tuple.
+            preEntry = web.ctx.orm.query(Entry).filter(Entry.id < entry.id).order_by("entries.id desc").all()
+            #print preEntry[0][1].id, preEntry[0][1].slug
+            nextEntry = web.ctx.orm.query(Entry).filter(Entry.id > entry.id).order_by(Entry.id).all()
+            #print nextEntry[0][1].id, nextEntry[0][1].title, entry.id
+            #nextEntry = list(db.query('SELECT slug FROM entries WHERE id = (SELECT \
+            #                          min(id) FROM entries WHERE id > %d)' % int(entry.id)))
             # update the viewNum
-            db.query('UPDATE entries SET viewNum = viewNum + 1 WHERE id=%d' % int(entry.id))
+            entry.viewNum = entry.viewNum + 1
+            #db.query('UPDATE entries SET viewNum = viewNum + 1 WHERE id=%d' % int(entry.id))
             #preEntry = db.select('entries', what='slug', where='id=%d' % (int(entry.id) + 1))
             #posEntry = db.select('entries', what='slug', where='id=%d' % (int(entry.id) + 1))
             d['entry'] = entry
@@ -113,6 +120,7 @@ class entry(object):
                 d['preEntry'] = None
 
             if nextEntry:
+                #d['nextEntry'] = nextEntry[0][1]
                 d['nextEntry'] = nextEntry[0]
             else:
                 d['nextEntry'] = None
@@ -128,16 +136,17 @@ class entry(object):
         if f.validates():
             if i.url == "":
                 i.url = "#"
-                createdTime = datetime.now().strftime("%Y-%m-%d %H:%M")
-                db.insert('comments', entryId=i.entryId, email=i.email, username=i.username, url=i.url, comment=i.comment,createdTime=createdTime)
-                db.update('entries', where = 'id=%s' % entry.entryId, commentNum = entry.commentNum + 1)
-                #d['f'] = f
-                #d['entry'] = entry
-                raise web.seeother('/entry/%s/' % slug)
-            else:
-                d['f'] = f
-                d['entry'] = entry
-                return render.entry(**d)
+                #createdTime = datetime.now().strftime("%Y-%m-%d %H:%M")
+                #db.insert('comments', entryId=i.entryId, email=i.email, username=i.username, url=i.url, comment=i.comment,createdTime=createdTime)
+                #db.update('entries', where = 'id=%s' % entry.entryId, commentNum = entry.commentNum + 1)
+            comment = Comment(i.email, i.username, i.url, i.comment, entry.id)
+            web.ctx.orm.add(comment)
+            entry.commentNum = entry.commentNum + 1
+            raise web.seeother('/entry/%s/' % slug)
+        else:
+            d['f'] = f
+            d['entry'] = entry
+            return render.entry(**d)
 
 class page(object):
     def GET(self):
@@ -179,7 +188,8 @@ class addComment(object):
         i = web.input()
         if i.url == "":
             i.url = "#"
-            createdTime = datetime.now().strftime("%Y-%m-%d %H:%M")
+            #createdTime = datetime.now().strftime("%Y-%m-%d %H:%M")
+            comment = Comment(i.email, i.username, i.url, i.comment, )
             db.insert('comments', entryId=i.id, email=i.email, username=i.username, url=i.url, comment=i.comment,createdTime=createdTime)
             entry = db.select('entries',what='commentNum', where='id=%s' % i.id)
             db.update('entries', where = 'id=%s' % i.entryId, commentNum = entry[0].commentNum + 1)

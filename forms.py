@@ -24,7 +24,7 @@ loginForm = form.Form(
 entryForm = form.Form(
         form.Textbox('title', form.notnull),
         form.Textbox('slug', form.notnull),
-        form.Textbox('category_id', form.notnull),
+        #form.Textbox('category_id', form.notnull),
         form.Textarea('content', form.notnull),
     )
 

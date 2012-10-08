@@ -17,9 +17,9 @@ inoremap <Plug>ZenCodingExpandAbbr u:call zencoding#expandAbbr(0,"")a
 inoremap <silent> <S-Tab> =BackwardsSnippet()
 inoremap <C-Tab> 	
 map  h
-snoremap <silent> <NL> i<Right>=TriggerSnippet()
 nmap <NL> j
 xmap <NL> j
+snoremap <silent> <NL> i<Right>=TriggerSnippet()
 omap <NL> j
 map  k
 map  l
@@ -98,6 +98,10 @@ snoremap ^ b<BS>^
 snoremap ` b<BS>`
 nmap gx <Plug>NetrwBrowseX
 vmap <F7> :call Python_Eval_VSplit() 
+nmap <Left> :bp
+xmap <Left> :bp
+nmap <Right> :bn
+xmap <Right> :bn
 snoremap <Left> bi
 snoremap <Right> a
 snoremap <BS> b<BS>
@@ -123,11 +127,7 @@ map <F6> a=strftime("%Y-%m-%d %H:%M:%S")
 map <F2> :%s/\s*$//g:noh''
 map <F8> :new:read !svn diff:set syntax=diff buftype=nofilegg
 map <F9> ggVGg?
-nmap <Left> :bp
-xmap <Left> :bp
 omap <Left> :bp
-nmap <Right> :bn
-xmap <Right> :bn
 omap <Right> :bn
 map <C-Space> ?
 cnoremap  <Home>
@@ -227,6 +227,7 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set whichwrap=b,s,<,>,h,l
 set wildignore=*.pyc
 set wildmenu
+set window=38
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -236,9 +237,33 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 models.py
-badd +0 static/sql/tables.sql
-badd +0 controllers/views.py
+badd +8 ~/sourcecode/python/sample/myfile2.py
+badd +100 ~/sourcecode/python/sample/models_test.py
+badd +9 ~/sourcecode/python/sample/exception.py
+badd +1 models.py
+badd +63 static/sql/tables.sql
+badd +28 controllers/views.py
+badd +27 pblog.py
+badd +1 ~/projects/dotcloud/pblog-on-dotcloud/static/sql/insert.sql
+badd +39 sqltest.py
+badd +1 pblog.db
+badd +45 templates/index.html
+badd +97 data.sql
+badd +1 _entry.html
+badd +1 templates/base.bk.html
+badd +17 templates/base.html
+badd +23 templates/_sideBar.html
+badd +4 templates/entry.html
+badd +35 templates/category.html
+badd +11 templates/tag.html
+badd +12 models_test.py
+badd +179 controllers/adminviews.py
+badd +26 templates/admin/entryEdit.html
+badd +27 forms.py
+badd +32 templates/admin/entryAdd.html
+badd +32 controllers/adminviews.py.bk
+badd +10 config/settings.py
+badd +0 templates/admin/entries.html
 args models.py
 edit models.py
 set splitbelow splitright
@@ -247,8 +272,8 @@ set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-map <buffer> ,  :w!:!python %
 noremap <buffer> <silent> ,tk :call Toggle_task_status()
+map <buffer> ,  :w!:!python %
 noremap <buffer> <silent> <C-D-CR> :call Toggle_task_status()
 inoremap <buffer> $d """"""O
 inoremap <buffer> $p print 
@@ -368,13 +393,13 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 22 - ((18 * winheight(0) + 13) / 26)
+let s:l = 78 - ((27 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-22
-normal! 04l
-tabedit controllers/views.py
+78
+normal! 023l
+tabedit controllers/adminviews.py
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -499,54 +524,19 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 11 - ((10 * winheight(0) + 13) / 26)
+let s:l = 464 - ((27 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-11
-normal! 024l
-tabedit static/sql/tables.sql
+464
+normal! 020l
+tabedit templates/admin/entryEdit.html
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
 argglobal
-let s:cpo_save=&cpo
-set cpo&vim
-imap <buffer> <Left> =sqlcomplete#DrillOutOfColumns()
-imap <buffer> <Right> =sqlcomplete#DrillIntoTable()
-vnoremap <buffer> <silent> [" :exec "normal! gv"|call search('\(^\s*\(--\|\/\/\|\*\|\/\*\|\*\/\).*\n\)\(^\s*\(--\|\/\/\|\*\|\/\*\|\*\/\)\)\@!', "W" )
-nnoremap <buffer> <silent> [" :call search('\(^\s*\(--\|\/\/\|\*\|\/\*\|\*\/\).*\n\)\(^\s*\(--\|\/\/\|\*\|\/\*\|\*\/\)\)\@!', "W" )
-vmap <buffer> <silent> [{ ?\c^\s*\(\(create\)\s\+\(or\s\+replace\s+\)\{,1}\)\{,1}\<\(function\|procedure\|event\|\(existing\|global\s\+temporary\s\+\)\{,1}table\|trigger\|schema\|service\|publication\|database\|datatype\|domain\|index\|subscription\|synchronization\|view\|variable\)\>
-nmap <buffer> <silent> [{ :call search('\c^\s*\(\(create\)\s\+\(or\s\+replace\s+\)\{,1}\)\{,1}\<\(function\|procedure\|event\|\(existing\|global\s\+temporary\s\+\)\{,1}table\|trigger\|schema\|service\|publication\|database\|datatype\|domain\|index\|subscription\|synchronization\|view\|variable\)\>', 'bW')
-vmap <buffer> <silent> [] :exec "normal! gv"|call search('\c^\s*end\W*$', 'bW' )
-vmap <buffer> <silent> [[ :exec "normal! gv"|call search('\c^\s*begin\>', 'bW' )
-nmap <buffer> <silent> [] :call search('\c^\s*end\W*$', 'bW' )
-nmap <buffer> <silent> [[ :call search('\c^\s*begin\>', 'bW' )
-vnoremap <buffer> <silent> ]" :exec "normal! gv"|call search('^\(\s*\(--\|\/\/\|\*\|\/\*\|\*\/\).*\n\)\@<!\(\s*\(--\|\/\/\|\*\|\/\*\|\*\/\)\)', "W" )
-nnoremap <buffer> <silent> ]" :call search('^\(\s*\(--\|\/\/\|\*\|\/\*\|\*\/\).*\n\)\@<!\(\s*\(--\|\/\/\|\*\|\/\*\|\*\/\)\)', "W" )
-vmap <buffer> <silent> ]} /\c^\s*\(\(create\)\s\+\(or\s\+replace\s+\)\{,1}\)\{,1}\<\(function\|procedure\|event\|\(existing\|global\s\+temporary\s\+\)\{,1}table\|trigger\|schema\|service\|publication\|database\|datatype\|domain\|index\|subscription\|synchronization\|view\|variable\)\>
-nmap <buffer> <silent> ]} :call search('\c^\s*\(\(create\)\s\+\(or\s\+replace\s+\)\{,1}\)\{,1}\<\(function\|procedure\|event\|\(existing\|global\s\+temporary\s\+\)\{,1}table\|trigger\|schema\|service\|publication\|database\|datatype\|domain\|index\|subscription\|synchronization\|view\|variable\)\>', 'W')
-vmap <buffer> <silent> ][ :exec "normal! gv"|call search('\c^\s*end\W*$', 'W' )
-vmap <buffer> <silent> ]] :exec "normal! gv"|call search('\c^\s*begin\>', 'W' )
-nmap <buffer> <silent> ][ :call search('\c^\s*end\W*$', 'W' )
-nmap <buffer> <silent> ]] :call search('\c^\s*begin\>', 'W' )
-imap <buffer> R :call sqlcomplete#Map("resetCache")
-imap <buffer> L :call sqlcomplete#Map("column_csv")
-imap <buffer> l :call sqlcomplete#Map("column_csv")
-imap <buffer> c :call sqlcomplete#Map("column")
-imap <buffer> v :call sqlcomplete#Map("view")
-imap <buffer> p :call sqlcomplete#Map("procedure")
-imap <buffer> t :call sqlcomplete#Map("table")
-imap <buffer> s :call sqlcomplete#Map("sqlStatement")
-imap <buffer> T :call sqlcomplete#Map("sqlType")
-imap <buffer> o :call sqlcomplete#Map("sqlOption")
-imap <buffer> f :call sqlcomplete#Map("sqlFunction")
-imap <buffer> k :call sqlcomplete#Map("sqlKeyword")
-imap <buffer> a :call sqlcomplete#Map("syntax")
-let &cpo=s:cpo_save
-unlet s:cpo_save
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -560,8 +550,8 @@ setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
 setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
-setlocal comments=s1:/*,mb:*,ex:*/,:--,://
-setlocal commentstring=/*%s*/
+setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+setlocal commentstring=<!--%s-->
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -571,14 +561,14 @@ setlocal cryptmethod=
 setlocal nocursorbind
 setlocal nocursorcolumn
 setlocal nocursorline
-setlocal define=\\c\\<\\(VARIABLE\\|DECLARE\\|IN\\|OUT\\|INOUT\\)\\>
+setlocal define=
 setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal expandtab
-if &filetype != 'sql'
-setlocal filetype=sql
+if &filetype != 'html'
+setlocal filetype=html
 endif
 setlocal foldcolumn=0
 set nofoldenable
@@ -594,17 +584,17 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=qc
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
 setlocal iminsert=2
 setlocal imsearch=2
 setlocal include=
 setlocal includeexpr=
-setlocal indentexpr=GetSQLIndent()
-setlocal indentkeys=!^F,o,O,=~end,=~else,=~elseif,=~elsif,0=~when,0=)
+setlocal indentexpr=HtmlIndentGet(v:lnum)
+setlocal indentkeys=o,O,*<Return>,<>>,{,}
 setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
+setlocal iskeyword=@,48-57,_,192-255,$
 setlocal keywordprg=
 set linebreak
 setlocal linebreak
@@ -612,14 +602,14 @@ setlocal nolisp
 set list
 setlocal list
 setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
+setlocal matchpairs=(:),{:},[:],<:>
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
 set number
 setlocal number
 setlocal numberwidth=4
-setlocal omnifunc=sqlcomplete#Complete
+setlocal omnifunc=htmlcomplete#CompleteTags
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
@@ -629,10 +619,10 @@ setlocal norelativenumber
 setlocal norightleft
 setlocal rightleftcmd=search
 setlocal noscrollbind
-setlocal shiftwidth=2
+setlocal shiftwidth=4
 setlocal noshortname
 setlocal smartindent
-setlocal softtabstop=0
+setlocal softtabstop=4
 setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
@@ -641,10 +631,10 @@ setlocal statusline=
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != 'sql'
-setlocal syntax=sql
+if &syntax != 'html'
+setlocal syntax=html
 endif
-setlocal tabstop=8
+setlocal tabstop=4
 setlocal tags=
 setlocal textwidth=500
 setlocal thesaurus=
@@ -653,12 +643,12 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 63 - ((18 * winheight(0) + 13) / 26)
+let s:l = 49 - ((19 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-63
-normal! 0
+49
+normal! 073l
 tabnext 2
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
