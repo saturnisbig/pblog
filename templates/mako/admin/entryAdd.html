@@ -1,0 +1,57 @@
+<%inherit file="base.html" />
+<%def name="title()">新增日志</%def>
+
+<link rel="stylesheet" href="/static/js/markitup/skins/markitup/style.css" type="text/css" media="screen" charset="utf-8"/>
+<link rel="stylesheet" href="/static/js/markitup/sets/default/style.css" type="text/css" media="screen" charset="utf-8"/>
+
+<script src="/static/js/markitup/jquery.markitup.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/markitup/sets/default/set.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function() {
+    $("#markItUp").markItUp(mySettings);
+});
+//]]>
+</script>
+
+
+<p><a href="/admin/entries/">返回日志列表</a></p>
+<div id="entryAdd">
+    <form action="/admin/entry/add/" method="POST" id="entryForm">
+        <table>
+            <tr>
+                <th>标题</th>
+                <td><input type="text" name="title" value="" /></td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td><input type="text" name="slug" value="" /></td>
+            </tr>
+            <tr>
+                <th>分类</th>
+                <td>
+                    <select name="categoryId">
+                        % for one in categories:
+                        <option value="${ one.id }">
+                        ${ one.name }(${ one.entryNum })
+                        </option>
+                        % endfor
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>标签</th>
+                <td><input type="text" name="tags" /></td>
+            </tr>
+            <tr>
+                <th>正文</th>
+                <td><textarea name="content" id="markItUp"></textarea></td>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td><input type="submit" value="新增日志" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+

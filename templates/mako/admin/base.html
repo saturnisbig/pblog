@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>${self.title()} - 后台管理</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta name="author" content="pudding" />
+    <link rel="stylesheet" type="text/css" href="/static/styles/admin.css" />
+    <link rel="stylesheet" type="text/css" href="/static/styles/reset.css" />
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <h1><a href="/admin/">后台管理</a></h1>
+        <div id="menu">
+         <ul>
+          <li><a href="/admin/entries/">文章管理</a></li>
+          <li><a href="/admin/categories/">类别管理</a></li>
+          <li><a href="/admin/tags/">标签管理</a></li>
+          <li><a href="/admin/comments/">评论管理</a></li>
+          <li><a href="/admin/links/">链接管理</a></li>
+          <li><a href="/admin/logout/">登出</a></li>
+         </ul>
+        </div>
+        <div class="clear"></div>
+      </div>
+
+      <div class="clear"></div>
+      <div id="main">
+            ${self.body()}
+      </div>
+
+      <div id="footer">
+        <div class="copyright">
+          <p>如需转贴, 请注明出处. @转自<a href="#">&lt;布丁博客:#&gt;</a> | Powered by <a href="http://webpy.org/" target="_blank">web.py</a></p>
+          <p>版权所有©2012 pudding</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,26 @@
+<%inherit file="base.html" />
+<%def name="title()">评论管理</%def>
+
+<table>
+    <tr>
+        <th>No.</th>
+        <th>发表人</th>
+        <th>邮箱</th>
+        <th>内容</th>
+        <th>发表时间</th>
+        <th>操作</th>
+    </tr>
+    % for i, c in enumerate(comments):
+        <tr>
+            <td>${ i }</td>
+            <td>${ c.username }</td>
+            <td>${ c.email}</td>
+            <td>${ c.comment}</td>
+            <td>${ c.createdTime}</td>
+            <td>
+                <a href="/admin/comment/edit/${ c.id }/">修改</a>
+                <a href="/admin/comment/del/${ c.id }/">删除</a>
+            </td>
+        </tr>
+    % endfor
+</table>

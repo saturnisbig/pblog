@@ -1,0 +1,64 @@
+<div id="sideBar">
+    <div id="recentPosts">
+        <p>Recent Posts</p>
+        <ul>
+            % if recentPosts:
+            % for entry in recentPosts:
+            <li><a href="/entry/${entry.slug}/">${entry.title[:15]}</a></li>
+            % endfor
+            % else:
+            <li>最近没有文章</li>
+            % endif
+        </ul>
+    </div>
+    <div id="category">
+        <p>类别</p>
+        <div class="modBody">
+            <ul>
+                % if categories:
+                % for c in categories:
+                <li><a href="/category/${c.slug}/">${c.name}<span>[${c.entryNum}]</span></a></li>
+                % endfor
+                % endif
+                <!--
+                <li><a href="#1">生活<span class="count">[2]</span></a></li>
+                <li><a href="#2">Google</a></li>
+                <li><a href="#3">World</a></li>
+                <li><a href="#4">Proggit</a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+    <div id="tags">
+        <p>标签</p>
+        <div class="modBody">
+            <ul>
+                % for t in tags:
+                <li><a href="/tag/${t.name}/">${t.name}<span>[${t.entryNum}]</span></a></li>
+                % endfor
+                <!-- 
+                <li><a href="#1">Linux <span class="count">[3]</span></a></li>
+                <li><a href="#2">Webpy[12]</a></li>
+                <li><a href="#3">Python[1]</a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+    <div id="links">
+        <p>链接</p>
+        <div class="modBody">
+            <ul>
+                % for l in links:
+                <li><a href="${l.url}">${l.name}</a></li>
+                % endfor
+                <!--
+                <li><a href="#1">BaiDu</a></li>
+                <li><a href="#2">Google</a></li>
+                <li><a href="#3">World</a></li>
+                <li><a href="#4">Proggit</a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+</div>
+

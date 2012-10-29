@@ -1,0 +1,14 @@
+<%inherit file="base.html" />
+
+<%def name="title()">首页</%def>
+
+<div id="content">
+    <div class="blogList">
+        % if entries:
+        % for entry in entries:
+        <p>${entry.title}</p>
+        <p>${entry.category.name}</p>
+        % endfor
+        % endif
+    </div>
+</div>

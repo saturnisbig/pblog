@@ -1,0 +1,34 @@
+<%inherit file="base.html" />
+
+<%def name="title()">标签 ${ slug }</%def>
+
+<div id="content">
+    <div class="blogList">
+        % if entries:
+        % for entry in entries:
+        <div class="blog">
+            <div class="blogHeader">
+                <h2>
+                    <a href="/entry/${entry.slug}/">${entry.title}</a>
+                    <span class="category"> - [ <a href="/category/${entry.category.name}/">${entry.category.name}</a>]</span>
+                </h2>
+            </div>
+            <div class="blogFooter">
+                <div class="blogInfo">
+                    <span class="author">布丁</span>
+                    发表于<span class="time">${entry.createdTime}</span>
+                    |
+                    <a href="/entry/${entry.slug}/" class="readmore">阅读全文</a>
+                    |
+                    <a href="/entry/${entry.slug}/" class="cmt">评论<span class="count">${entry.commentNum}</span></a>
+                    |
+                    <a href="/admin/entry/edit/${entry.id}/" class="edit">编辑</a>
+                </div>
+            </div>
+        </div>
+        % endfor
+        % else:
+            <p>该标签下还没有文章</p>
+        % endif
+    </div>
+</div>

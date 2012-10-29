@@ -1,0 +1,26 @@
+<%inherit file="base.html" />
+<%def name="title()">链接管理</%def>
+
+<p id="catAdd"><a href="/admin/link/add/">添加链接</a></p>
+<table>
+    <tr>
+        <th>No.</th>
+        <th>名称</th>
+        <th>链接地址</th>
+        <th>链接描述</th>
+        <th>操作</th>
+    </tr>
+    % for i, one in enumerate(links):
+        <tr>
+            <td>${ i + 1 }</td>
+            <td>${ one.name }</td>
+            <td>${ one.url}</td>
+            <td>${ one.description}</td>
+            <td>
+                <a href="/admin/link/edit/${ one.id }/">修改</a>
+                <a href="/admin/link/del/${ one.id }/">删除</a>
+            </td>
+        </tr>
+    % endfor
+</table>
+

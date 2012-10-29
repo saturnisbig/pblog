@@ -1,0 +1,29 @@
+<%inherit file="base.html" />
+<%def name="title()">类别管理</%def>
+
+<p id="catAdd"><a href="/admin/category/add/">添加类别</a></p>
+<table>
+    <tr>
+        <th>No.</th>
+        <th>名称</th>
+        <th>slug</th>
+        <th>文章数</th>
+        <th>发表时间</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+    % for i,cat in enumerate(cats):
+        <tr>
+            <td>${ i + 1 }</td>
+            <td>${ cat.name}</td>
+            <td>${ cat.slug}</td>
+            <td>${ cat.entryNum}</td>
+            <td>${ cat.createdTime}</td>
+            <td>${ cat.modifiedTime}</td>
+            <td>
+                <a href="/admin/category/edit/${ cat.id }/">修改</a>
+                <a href="/admin/category/del/${ cat.id }/">删除</a>
+            </td>
+        </tr>
+    % endfor
+</table>

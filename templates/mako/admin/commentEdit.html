@@ -1,0 +1,8 @@
+<%inherit file="base.html" />
+<%def name="title()">编辑评论</%def>
+
+<form action="/admin/comment/edit/${ cmtId }/" method="post" accept-charset="utf-8">
+  
+${ f.render() }
+
+</form>

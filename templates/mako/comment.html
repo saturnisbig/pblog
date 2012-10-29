@@ -1,0 +1,12 @@
+
+<div id="comment">
+    % if datas:
+    <p>${datas.email}</p>
+    <p>${datas.username}</p>
+    <p>${datas.url}</p>
+    <p>${datas.comment}</p>
+    <p>${created_time}</p>
+    % else:
+    <p>没有评论</p>
+    % endif
+</div>

@@ -17,11 +17,16 @@ d = dict()
 
 # login
 def login_required(func):
-    def Function(*args):
+    #if web.ctx.session.isAdmin == 0:
+    #    raise web.seeother('/login/')
+    #else:
+    #    return func(*args, **kwargs)
+
+    def Function(*args, **kwargs):
         if web.ctx.session.isAdmin == 0:
             raise web.seeother('/login/')
         else:
-            return func(*args)
+            return func(*args, **kwargs)
     return Function
 
 class login(object):

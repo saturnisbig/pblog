@@ -35,6 +35,8 @@ class Entry(Base):
     id = Column(Integer(11), primary_key = True)
     title = Column(String)
     slug = Column(String)
+    # 摘要 29/10/12 21:33:19
+    #abstract = Column(String, default="")
     content = Column(Text)
     viewNum = Column(Integer, default=1)
     commentNum = Column(Integer, default=0)

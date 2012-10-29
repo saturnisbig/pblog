@@ -11,7 +11,7 @@ from forms import commentForm
 from models import *
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import func
-
+from config.settings import contentLength, recentPostNum
 
 d = dict()
 
@@ -24,11 +24,15 @@ def get_links():
 def get_categories():
     return web.ctx.orm.query(Category).order_by('categories.name').all()
 
+def get_recent_posts():
+    return web.ctx.orm.query(Entry).order_by('entries.createdTime desc')[:recentPostNum]
+
 def load_sqla(handler):
     web.ctx.orm = scoped_session(sessionmaker(bind=engine))
     d['categories'] = get_categories()
     d['tags'] = get_tags()
     d['links'] = get_links()
+    d['recentPosts'] = get_recent_posts()
 
     try:
         return handler()
@@ -60,16 +64,19 @@ class index(object):
         entries = web.ctx.orm.query(Entry).order_by(Entry.id).all()
         #print entries
         #for entry in entries:
-        #    print entry.title, entry.slug, entry.category.name
-        #    if len(entry.tags):
-        #        for t in entry.tags:
-        #            print t.name, t.entryNum
+        #    cutPos = contentLength
+        #    if entry.content[contentLength] != u' ':
+        #        cutPos = entry.content.find(u' ', contentLength)
+        #        print cutPos, contentLength
+        #    entry.content = entry.content[:cutPos] + '......'
+            #print entry.content
             #for t in entry.tags:
             #    print 'tags:', t.name
         #for entry in entries:
         #    entry.tags = web.ctx.orm.query(entry_tag).join(Tag).filter(entry_tag.entry_id=entry.id)
 
         d['entries'] = entries
+        d['contentLength'] = contentLength
         return render.index(**d)
 
 class entry(object):
@@ -176,11 +183,11 @@ class tag(object):
     #raise web.seeother("/404/")
 
 class category(object):
-    def GET(self, c):
+    def GET(self, slug):
         #entries = list(db.query("select en.id AS entryId, en.title, en.slug, en.content, en.createdTime, c.name AS cat, en.commentNum from entries en LEFT JOIN categories c ON en.categoryId=c.id where c.name=$c", vars={'c': c}))
-        entries = web.ctx.orm.query(Entry).join(Category).filter(Category.name == c).filter(Entry.categoryId == Category.id).all()
+        entries = web.ctx.orm.query(Entry).join(Category).filter(Category.slug == slug).filter(Entry.categoryId == Category.id).all()
         d['entries'] = entries
-        d['slug'] = c
+        d['slug'] = slug
         return render.category(**d)
 
 class addComment(object):
