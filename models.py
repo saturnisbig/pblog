@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 
 
-engine = create_engine('sqlite:///pblog.db', echo=False)
+engine = create_engine('sqlite:///pblog1.db', echo=False)
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -41,19 +41,22 @@ class Entry(Base):
     viewNum = Column(Integer, default=1)
     commentNum = Column(Integer, default=0)
     createdTime = Column(DateTime, default = datetime.now())
-    modifiedTime = Column(DateTime)
+    modifiedTime = Column(DateTime, default = datetime.now())
     categoryId = Column(Integer, ForeignKey('categories.id'))
+    userId = Column(Integer, ForeignKey('users.id'))
 
     category = relationship("Category", backref=backref('entries', order_by=id))
+    user = relationship("User", backref=backref('entries', order_by=id))
     # relation with tags, many-to-many,
     tags = relationship("Tag", secondary=entry_tag, backref='entries', cascade="all, delete, delete-orphan",
                         single_parent=True)
 
-    def __init__(self, title, slug, content, catId):
+    def __init__(self, title, slug, content, catId, userId):
         self.title = title
         self.slug = slug
         self.content = content
         self.categoryId = catId
+        self.userId = userId
 
 class Category(Base):
     __tablename__ = 'categories'

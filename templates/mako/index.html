@@ -29,8 +29,8 @@
                     % endif
                 </div>
                 <div class="blogInfo">
-                    <span class="author">布丁</span>
-                    发表于<span class="time">${entry.createdTime}</span>
+                    <span class="author">${ entry.user.username }</span>
+                    发表于<span class="time">${entry.createdTime.strftime("%Y-%m-%d %H:%M:%S")}</span>
                     |
                     <a href="/entry/${entry.slug}/" class="readmore">阅读全文(${ entry.viewNum })</a>
                     |

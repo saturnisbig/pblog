@@ -10,7 +10,7 @@ from models import *
 
 
 
-db = settings.db
+#db = settings.db
 render = settings.render_admin
 
 d = dict()
@@ -44,10 +44,12 @@ class login(object):
             #admin = list(db.select('users', what='passwd', where='username="%s"' \
             #                       % i.get('username')))
             #print admin[0].passwd
-            admin = web.ctx.orm.query(User.passwd).filter(User.username == i.username).all()
+            admin = web.ctx.orm.query(User).filter(User.username == i.username).all()
             if len(admin) > 0:
                 if passwd == admin[0].passwd:
                     web.ctx.session.isAdmin = 1
+                    web.ctx.session.userId = admin[0].id
+                    web.ctx.session.username = admin[0].username
                     raise web.seeother('/')
             else:
                 errs = 'username/passwd error.'
@@ -89,6 +91,7 @@ class index(object):
         #d['tagNum'] = tagNum[0].num
         #d['commentNum'] = commentNum[0].num
         #d['linkNum'] = linkNum[0].num
+        print web.ctx.session.get('isAdmin', '')
         return render.index(**d)
 
 class entries(object):
@@ -108,6 +111,8 @@ class entryAdd(object):
         #cats = list(db.select('categories', what=what))
         cats = web.ctx.orm.query(Category).order_by(Category.id).all()
         d['categories'] = cats
+        #print web.ctx.session.username
+        d['session'] = web.ctx.session
         return render.entryAdd(**d)
 
     @login_required
@@ -120,7 +125,7 @@ class entryAdd(object):
             #entryId = db.insert('entries', title=i['title'], slug=i['slug'], categoryId=catId, \
             #                    modifiedTime=datetime.now(), createdTime=datetime.now(), content=i['content'])
             # print i['tags'] == None, type(i['tags']), len(i['tags'])
-            entry = Entry(i.title, i.slug, i.content, catId)
+            entry = Entry(i.title, i.slug, i.content, catId, web.ctx.session.userId)
             web.ctx.orm.add(entry)
             if entry.id:
                 entryNum = entry.category.entryNum

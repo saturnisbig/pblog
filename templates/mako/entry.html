@@ -31,7 +31,7 @@
                 % endif
             </div>
             <div class="blogHeader">
-                <h2><a href="/entry/${entry.slug}/">${entry.title}</a><span class="category">-[ <a href="/category/${entry.category.name}/">${entry.category.name}</a>]</span></h2><h3>${entry.createdTime}</h3>
+                <h2><a href="/entry/${entry.slug}/">${entry.title}</a><span class="category">-[ <a href="/category/${entry.category.name}/">${entry.category.name}</a>]</span></h2><h3>${entry.createdTime.strftime("%Y-%m-%d")}</h3>
             </div>
             <div class="blogBody">
                 <p class="cc-lisence" style="line-height:180%;">
@@ -62,8 +62,8 @@
                     % endif
                 </div>
                 <div class="blogInfo">
-                    <span class="author">布丁</span>
-                    发表于<span class="time">${entry.createdTime}</span>
+                    <span class="author">${ entry.user.username }</span>
+                    发表于<span class="time">${entry.createdTime.strftime("%Y-%m-%d %H:%M:%S")}</span>
                     |
                     <a href="/admin/entry/edit/${ entry.id}/" class="edit">编辑</a>
                     |

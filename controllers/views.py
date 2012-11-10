@@ -3,10 +3,11 @@
 ##
 ##
 import web
-from config.settings import render, db
+#from config.settings import render, db
+from config.settings import render
 from datetime import datetime
 import time
-from cache import mcache
+#from cache import mcache
 from forms import commentForm
 from models import *
 from sqlalchemy.orm import scoped_session, sessionmaker

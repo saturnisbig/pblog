@@ -19,8 +19,8 @@
         <td>${ entry.title }</td>
         <td>${ entry.viewNum }</td>
         <td>${ entry.commentNum }</td>
-        <td>${ entry.createdTime }</td>
-        <td>${ entry.modifiedTime }</td>
+        <td>${ entry.createdTime.strftime("%Y-%m-%d %H:%M:%S") }</td>
+        <td>${ entry.modifiedTime.strftime("%Y-%m-%d %H:%M:%S") }</td>
         <td>
             <a href="/admin/entry/edit/${ entry.id }/">编辑</a>
             <a href="/admin/entry/del/${ entry.id }/">删除</a>
