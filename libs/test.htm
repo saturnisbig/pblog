@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh"
+ lang="zh" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="verify-v1" content="b8lZkhAZ0gBeWqZkVdAxNe+LWoK1QM1OYztpvC7Sqic=" />
+  <title>
+    Python 用HTMLParser解析HTML文件    [Python俱乐部]
+  </title>
+
+  <meta name="generator" content="DokuWiki" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2010-06-02T09:18:50+0800" />
+<meta name="keywords" content="python-files,htmlparser" />
+<link rel="search" type="application/opensearchdescription+xml" href="/lib/exe/opensearch.php" title="Python俱乐部" />
+<link rel="start" href="/" />
+<link rel="contents" href="/python-files/htmlparser?do=index" title="索引" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="/feed.php?mode=list&amp;ns=python-files" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="/_export/xhtml/python-files/htmlparser" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="/_export/raw/python-files/htmlparser" />
+<link rel="canonical" href="http://www.pythonclub.org/python-files/htmlparser" />
+<link rel="stylesheet" media="screen" type="text/css" href="/lib/exe/css.php?t=arctic&amp;tseed=1316051718" />
+<link rel="stylesheet" media="all" type="text/css" href="/lib/exe/css.php?s=all&amp;t=arctic&amp;tseed=1316051718" />
+<link rel="stylesheet" media="print" type="text/css" href="/lib/exe/css.php?s=print&amp;t=arctic&amp;tseed=1316051718" />
+<script type="text/javascript" ><!--//--><![CDATA[//><!--
+var NS='python-files';var JSINFO = {"id":"python-files:htmlparser","namespace":"python-files"};
+//--><!]]></script>
+<script type="text/javascript" charset="utf-8" src="/lib/exe/js.php?tseed=1316051718" ></script>
+
+  <link rel="shortcut icon" href="/lib/tpl/arctic/images/favicon.ico" />
+
+  
+</head>
+<body>
+<div id="wrapper">
+  <div class="dokuwiki">
+
+    
+    <div class="stylehead">
+      <div class="header">
+        <div class="pagename">
+          <a href="/python-files/htmlparser" >Python 用HTMLParser解析HTML文件</a>        </div>
+        <div class="logo">
+          <a href="/"  name="dokuwiki__top" accesskey="h" title="[ALT+H]">Python俱乐部</a>        </div>
+      </div>
+    
+       
+      <div class="breadcrumbs">
+        <span class="bchead">您的足迹:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/python-files/htmlparser"  class="breadcrumbs" title="python-files:htmlparser">Python 用HTMLParser解析HTML文件</a></span>      </div>
+      
+            </div>
+
+            <div class="bar" id="bar__top">
+        <div class="bar-left">
+          <a href="/python-files/htmlparser?do=edit&amp;rev="  class="action source" accesskey="v" rel="nofollow" title="显示源文件">显示源文件</a><a href="/python-files/htmlparser?do=revisions"  class="action revs" accesskey="o" rel="nofollow" title="修订记录">修订记录</a>        </div>
+        <div class="bar-right">
+          <a href="/python-files/htmlparser?do=recent"  class="action recent" accesskey="r" rel="nofollow" title="最近更改">最近更改</a><a href="/python-files/htmlparser?do=index"  class="action index" accesskey="x" rel="nofollow" title="索引">索引</a><a href="/python-files/htmlparser?do=login&amp;sectok=7ccee849858d36f019a223efad9ac9ce"  class="action login" accesskey="" rel="nofollow" title="登录">登录</a>        </div>
+    </div>
+    
+    
+    
+    
+              <div class="left_sidebar">
+          <form action="/" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="搜索" class="button" title="搜索" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>          <div class="main_sidebar sidebar_box">
+
+<h1 class="sectionedit1"><a name="sb_left_python俱乐部" id="sb_left_python俱乐部">Python俱乐部</a></h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Python俱乐部" [1-31] -->
+<h2 class="sectionedit2"><a name="sb_left_python" id="sb_left_python">Python</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="/start" class="wikilink1" title="start">PythonClub 首页</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-basic/start" class="wikilink1" title="python-basic:start">Python 基础</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-files/start" class="wikilink1" title="python-files:start">Python 常见文件操作</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-network-application/start" class="wikilink1" title="python-network-application:start">Python 网络编程</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-hacks/start" class="wikilink1" title="python-hacks:start">Python 小技巧</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-news/start" class="wikilink1" title="python-news:start">Python 趣闻</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/python-class/start" class="wikilink1" title="python-class:start">Python 类</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Python" [32-360] -->
+<h2 class="sectionedit3"><a name="sb_left_小课题" id="sb_left_小课题">小课题</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="/project/start" class="wikilink1" title="project:start">我的项目</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "小课题" [361-406] -->
+<h2 class="sectionedit4"><a name="sb_left_关于本站" id="sb_left_关于本站">关于本站</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="/about" class="wikilink1" title="about">关于Python俱乐部</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/wiki/syntax" class="wikilink1" title="wiki:syntax">编辑器使用方法</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "关于本站" [407-487] -->
+<h2 class="sectionedit5"><a name="sb_left_链接" id="sb_left_链接">链接</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.truevue.org/" class="urlextern" target="_blank" title="http://www.truevue.org/"  rel="nofollow">东华博客</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.gocalf.com/" class="urlextern" target="_blank" title="http://www.gocalf.com/"  rel="nofollow">Go Calf</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.digquan.com/" class="urlextern" target="_blank" title="http://www.digquan.com/"  rel="nofollow">挖券，京东优惠券</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "链接" [488-] -->
+</div>
+        </div>
+        <div class="right_page">
+          
+<h1 class="sectionedit1"><a name="python_用htmlparser解析html文件" id="python_用htmlparser解析html文件"><span class="search_hit">Python</span> 用<span class="search_hit">HTMLParser解析HTML</span>文件</a></h1>
+<div class="level1">
+
+<p>
+
+HTMLParser是<span class="search_hit">Python</span>自带的模块，使用简单，能够很容易的实现HTML文件的分析。<br/>
+
+本文主要简单讲一下HTMLParser的用法. <br/>
+
+</p>
+
+<p>
+使用时需要定义一个从类HTMLParser继承的类，重定义函数：
+</p>
+<ul>
+<li class="level1"><div class="li"> handle_starttag( tag, attrs)</div>
+</li>
+<li class="level1"><div class="li"> handle_startendtag( tag, attrs) </div>
+</li>
+<li class="level1"><div class="li"> handle_endtag( tag)</div>
+</li>
+</ul>
+
+<p>
+来实现自己需要的功能。
+</p>
+
+<p>
+tag是的html标签，attrs是 (属性，值)元组(tuple)的列表(list). <br/>
+
+HTMLParser自动将tag和attrs都转为小写。
+</p>
+
+<p>
+下面给出的例子抽取了html中的所有链接：
+
+</p>
+<pre class="code python"><span class="kw1">from</span> <span class="kw3">HTMLParser</span> <span class="kw1">import</span> <span class="kw3">HTMLParser</span>
+&nbsp;
+<span class="kw1">class</span> MyHTMLParser<span class="br0">&#40;</span><span class="kw3">HTMLParser</span><span class="br0">&#41;</span>:
+    <span class="kw1">def</span> <span class="kw4">__init__</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="kw3">HTMLParser</span>.<span class="kw4">__init__</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>
+        <span class="kw2">self</span>.<span class="me1">links</span> = <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="kw1">def</span> handle_starttag<span class="br0">&#40;</span><span class="kw2">self</span>, tag, attrs<span class="br0">&#41;</span>:
+        <span class="co1">#print &quot;Encountered the beginning of a %s tag&quot; % tag</span>
+        <span class="kw1">if</span> tag == <span class="st0">&quot;a&quot;</span>:
+            <span class="kw1">if</span> <span class="kw2">len</span><span class="br0">&#40;</span>attrs<span class="br0">&#41;</span> == <span class="nu0">0</span>: <span class="kw1">pass</span>
+            <span class="kw1">else</span>:
+                <span class="kw1">for</span> <span class="br0">&#40;</span>variable, value<span class="br0">&#41;</span>  <span class="kw1">in</span> attrs:
+                    <span class="kw1">if</span> variable == <span class="st0">&quot;href&quot;</span>:
+                        <span class="kw2">self</span>.<span class="me1">links</span>.<span class="me1">append</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">if</span> __name__ == <span class="st0">&quot;__main__&quot;</span>:
+    html_code = <span class="st0">&quot;&quot;&quot;
+    &lt;a href=&quot;www.google.com&quot;&gt; google.com&lt;/a&gt;
+    &lt;A Href=&quot;www.pythonclub.org&quot;&gt; PythonClub &lt;/a&gt;
+    &lt;A HREF = &quot;www.sina.com.cn&quot;&gt; Sina &lt;/a&gt;
+    &quot;&quot;&quot;</span>
+    hp = MyHTMLParser<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    hp.<span class="me1">feed</span><span class="br0">&#40;</span>html_code<span class="br0">&#41;</span>
+    hp.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span>hp.<span class="me1">links</span><span class="br0">&#41;</span></pre>
+
+<p>
+输出为：
+
+</p>
+<pre class="file">[&#039;www.google.com&#039;, &#039;www.pythonclub.org&#039;, &#039;www.sina.com.cn&#039;]</pre>
+
+<p>
+如果想抽取图形链接
+
+</p>
+<pre class="file">&lt;img src=&#039;http://www.google.com/intl/zh-CN_ALL/images/logo.gif&#039; /&gt;</pre>
+
+<p>
+
+就要重定义 handle_startendtag( tag, attrs)  函数
+
+</p>
+
+</div>
+
+        </div>
+      
+    
+      <div class="stylefoot">
+        <div class="meta">
+          <div class="user">
+                    </div>
+          <div class="doc">
+          python-files/htmlparser.txt &middot; 最后更改: 2010/06/02 09:18 (外部编辑)          </div>
+        </div>
+      </div>
+
+    <div class="clearer"></div>
+
+    
+            <div class="bar" id="bar__bottom">
+      <div class="bar-left">
+        <a href="/python-files/htmlparser?do=edit&amp;rev="  class="action source" accesskey="v" rel="nofollow" title="显示源文件">显示源文件</a><a href="/python-files/htmlparser?do=revisions"  class="action revs" accesskey="o" rel="nofollow" title="修订记录">修订记录</a>      </div>
+      <div class="bar-right">
+        <a href="#dokuwiki__top"  class="action top" accesskey="x" rel="nofollow" title="到顶部">到顶部</a><a href="/python-files/htmlparser?do=backlink" >Back Links</a>      </div>
+    </div>
+    <div class="clearer"></div>
+        
+    <div align="center" class="footerinc">
+2007~2011 Copyright @ <a href="http://www.pythonclub.org" style="color:rgb(255, 255, 255);" title="PythonClub.org">http://www.pythonclub.org</a><img width="0" height="0" src="http://useragent.pythonclub.org/ua.gif" />
+</div>
+
+  </div>
+</div>
+
+<div class="no"><img src="/lib/exe/indexer.php?id=python-files%3Ahtmlparser&amp;1353221005" width="1" height="1" alt=""  /></div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2523397-13");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

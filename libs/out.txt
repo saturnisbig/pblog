@@ -1,0 +1,214 @@
+Python 用HTMLParser解析HTML文件    [Python俱乐部]
+<!--//-->
+<![CDATA[/ /><!--
+var NS='python-files';var JSINFO = {"id":"python-files:htmlparser","namespace":"python-files"};
+//--><!]]>
+<a href="/python-files/htmlparser">
+ Python 用HTMLParser解析HTML文件
+</a>
+<a href="/" name="dokuwiki__top">
+ Python俱乐部
+</a>
+您的足迹:
+<a href="/python-files/htmlparser">
+ Python 用HTMLParser解析HTML文件
+</a>
+<a href="/python-files/htmlparser?do=edit&amp;rev=">
+ 显示源文件
+</a>
+<a href="/python-files/htmlparser?do=revisions">
+ 修订记录
+</a>
+<a href="/python-files/htmlparser?do=recent">
+ 最近更改
+</a>
+<a href="/python-files/htmlparser?do=index">
+ 索引
+</a>
+<a href="/python-files/htmlparser?do=login&amp;sectok=7ccee849858d36f019a223efad9ac9ce">
+ 登录
+</a>
+<a name="sb_left_python俱乐部">
+ Python俱乐部
+</a>
+<a name="sb_left_python">
+ Python
+</a>
+<ul>
+ <li>
+  <a href="/start">
+   PythonClub 首页
+  </a>
+ </li>
+ <li>
+  <a href="/python-basic/start">
+   Python 基础
+  </a>
+ </li>
+ <li>
+  <a href="/python-files/start">
+   Python 常见文件操作
+  </a>
+ </li>
+ <li>
+  <a href="/python-network-application/start">
+   Python 网络编程
+  </a>
+ </li>
+ <li>
+  <a href="/python-hacks/start">
+   Python 小技巧
+  </a>
+ </li>
+ <li>
+  <a href="/python-news/start">
+   Python 趣闻
+  </a>
+ </li>
+ <li>
+  <a href="/python-class/start">
+   Python 类
+  </a>
+  <a name="sb_left_小课题">
+   小课题
+  </a>
+  <ul>
+   <li>
+    <a href="/project/start">
+     我的项目
+    </a>
+    <a name="sb_left_关于本站">
+     关于本站
+    </a>
+    <ul>
+     <li>
+      <a href="/about">
+       关于Python俱乐部
+      </a>
+     </li>
+     <li>
+      <a href="/wiki/syntax">
+       编辑器使用方法
+      </a>
+      <a name="sb_left_链接">
+       链接
+      </a>
+      <ul>
+       <li>
+        <a href="http://www.truevue.org/" target="_blank">
+         东华博客
+        </a>
+       </li>
+       <li>
+        <a href="http://www.gocalf.com/" target="_blank">
+         Go Calf
+        </a>
+       </li>
+       <li>
+        <a href="http://www.digquan.com/" target="_blank">
+         挖券，京东优惠券
+        </a>
+        <a name="python_用htmlparser解析html文件">
+         Python
+        </a>
+        用HTMLParser解析HTML文件
+        <p>
+         HTMLParser是
+        </p>
+        Python自带的模块，使用简单，能够很容易的实现HTML文件的分析。
+
+本文主要简单讲一下HTMLParser的用法.
+        <p>
+         使用时需要定义一个从类HTMLParser继承的类，重定义函数：
+        </p>
+        <ul>
+         <li>
+          handle_starttag( tag, attrs)
+         </li>
+         <li>
+          handle_startendtag( tag, attrs)
+         </li>
+         <li>
+          handle_endtag( tag)
+         </li>
+         <p>
+          来实现自己需要的功能。
+         </p>
+         <p>
+          tag是的html标签，attrs是 (属性，值)元组(tuple)的列表(list).
+         </p>
+         HTMLParser自动将tag和attrs都转为小写。
+         <p>
+          下面给出的例子抽取了html中的所有链接：
+         </p>
+         from HTMLParser import HTMLParser
+
+class MyHTMLParserHTMLParser:
+    def __init__self:
+        HTMLParser.__init__self
+        self.links = 
+
+    def handle_starttagself, tag, attrs:
+        #print Encountered the beginning of a %s tag % tag
+        if tag == a:
+            if lenattrs == 0: pass
+            else:
+                for variable, value  in attrs:
+                    if variable == href:
+                        self.links.appendvalue
+
+if __name__ == __main__:
+    html_code = 
+    a href=www.google.com google.com/a
+    A Href=www.pythonclub.org PythonClub /a
+    A HREF = www.sina.com.cn Sina /a
+    
+    hp = MyHTMLParser
+    hp.feedhtml_code
+    hp.close
+    printhp.links
+         <p>
+          输出为：
+         </p>
+         [www.google.com, www.pythonclub.org, www.sina.com.cn]
+         <p>
+          如果想抽取图形链接
+         </p>
+         img src=http://www.google.com/intl/zh-CN_ALL/images/logo.gif /
+         <p>
+          就要重定义 handle_startendtag( tag, attrs)  函数
+         </p>
+         python-files/htmlparser.txt  最后更改: 2010/06/02 09:18 (外部编辑)
+         <a href="/python-files/htmlparser?do=edit&amp;rev=">
+          显示源文件
+         </a>
+         <a href="/python-files/htmlparser?do=revisions">
+          修订记录
+         </a>
+         <a href="#dokuwiki__top">
+          到顶部
+         </a>
+         <a href="/python-files/htmlparser?do=backlink">
+          Back Links
+         </a>
+         2007~2011 Copyright @
+         <a href="http://www.pythonclub.org">
+          http://www.pythonclub.org
+         </a>
+         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+
+try {
+var pageTracker = _gat._getTracker("UA-2523397-13");
+pageTracker._trackPageview();
+} catch(err) {}
+        </ul>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>

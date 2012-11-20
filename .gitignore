@@ -1,0 +1,4 @@
+# comment - ignore by git.
+*.pyc
+*.db
+sessions/
