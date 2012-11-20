@@ -15,7 +15,7 @@ render = settings.render_admin
 
 d = dict()
 
-# login
+# decorator,login check.
 def login_required(func):
     #if web.ctx.session.isAdmin == 0:
     #    raise web.seeother('/login/')
@@ -28,6 +28,23 @@ def login_required(func):
         else:
             return func(*args, **kwargs)
     return Function
+
+
+def clean_html(html):
+    #tags = {
+    #    'a': ['href', 'target', 'name'],
+    #    'img': ['src', 'alt'],
+    #    'b': '',
+    #    'strong': '',
+    #    'em': '',
+    #    'i': '',
+    #    'ul': '',
+    #    'li': ''
+    #}
+    import re
+    html = re.sub(r'</?\w+[^>]*>', '', html)
+    html = re.sub(r'\n', '<br />', html)
+    return html
 
 class login(object):
     def GET(self):
@@ -260,6 +277,7 @@ class entryEdit(object):
                 web.ctx.orm.commit()
             entry.title = i.title
             entry.slug = i.slug
+            #entry.content = clean_html(i.content)
             entry.content = i.content
             entry.modifiedTime = datetime.now()
             entry.category.entryNum = entry.category.entryNum + 1

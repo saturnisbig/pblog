@@ -1,19 +1,6 @@
 <%inherit file="base.html" />
 <%def name="title()">修改日志</%def>
 
-<link rel="stylesheet" href="/static/js/markitup/skins/markitup/style.css" type="text/css" media="screen" charset="utf-8"/>
-<link rel="stylesheet" href="/static/js/markitup/sets/default/style.css" type="text/css" media="screen" charset="utf-8"/>
-
-<script src="/static/js/markitup/jquery.markitup.js" type="text/javascript" charset="utf-8"></script>
-<script src="/static/js/markitup/sets/default/set.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" language="javascript" charset="utf-8">
-//<![CDATA[
-$(document).ready(function() {
-    $("#markItUp").markItUp(mySettings);
-});
-//]]>
-</script>
-
 
 <p><a href="/admin/entries/">返回日志列表</a></p>
 % if entry:
@@ -62,3 +49,17 @@ $(document).ready(function() {
 % else:
 <p>文章不存在</p>
 % endif
+
+
+<link rel="stylesheet" href="/static/js/markitup/skins/markitup/style.css" type="text/css" media="screen" charset="utf-8"/>
+<link rel="stylesheet" href="/static/js/markitup/sets/markdown/style.css" type="text/css" media="screen" charset="utf-8"/>
+<script src="/static/js/markitup/jquery.markitup.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/markitup/sets/markdown/set.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function() {
+    $("#markItUp").markItUp(mySettings);
+});
+//]]>
+</script>
+

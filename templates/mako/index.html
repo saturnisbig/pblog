@@ -43,4 +43,13 @@
         % endfor
         % endif
     </div>
+    <div id="pageLink">
+        % if p.page > 1:
+            <span id="prePage"><a href="/?page=${ p.prevPage }">上一页</a></span>
+        % endif
+        % if p.page < p.pages:
+            <span id="nextPage"><a href="/?page=${ p.nextPage }">下一页</a></span>
+        % endif
+        <p id="curPage">${ p.page }/${ p.pages }</p>
+    </div>
 </div>

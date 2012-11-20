@@ -12,7 +12,8 @@ from forms import commentForm
 from models import *
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import func
-from config.settings import contentLength, recentPostNum
+from config.settings import contentLength, recentPostNum, entryPerPage
+from utils.pagination import Pagination
 
 d = dict()
 
@@ -62,7 +63,11 @@ class index(object):
         #entries = list(db.query(sql))
         #for entry in entries:
         #    entry.tags = db.query("select * from tags t left join entry_tag et on t.id=et.tagId where et.entryId=$id", vars={'id': entry.entryId})
-        entries = web.ctx.orm.query(Entry).order_by(Entry.id).all()
+        i = web.input(page=1)
+        entryCount = web.ctx.orm.query(Entry).count()
+        p = Pagination(entryCount, entryPerPage, int(i.page))
+        print p.page, p.pages, p.limit
+        entries = web.ctx.orm.query(Entry).order_by('createdTime desc')[p.start:p.start + p.limit]
         #print entries
         #for entry in entries:
         #    cutPos = contentLength
@@ -77,6 +82,7 @@ class index(object):
         #    entry.tags = web.ctx.orm.query(entry_tag).join(Tag).filter(entry_tag.entry_id=entry.id)
 
         d['entries'] = entries
+        d['p'] = p
         d['contentLength'] = contentLength
         return render.index(**d)
 
